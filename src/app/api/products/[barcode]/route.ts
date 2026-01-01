@@ -1,54 +1,72 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-import { Product } from '@/types';
-
-const DATA_FILE = path.join(process.cwd(), 'data', 'products.json');
-
-async function getProductsData(): Promise<Product[]> {
-  try {
-    const data = await fs.readFile(DATA_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
-
-async function saveProductsData(products: Product[]): Promise<void> {
-  await fs.mkdir(path.dirname(DATA_FILE), { recursive: true });
-  await fs.writeFile(DATA_FILE, JSON.stringify(products, null, 2));
-}
+import { supabase } from '@/lib/supabase/client';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ barcode: string }> }
 ) {
-  const { barcode } = await params;
-  const products = await getProductsData();
-  const product = products.find((p) => p.barcode === barcode);
+  try {
+    const { barcode } = await params;
 
-  if (!product) {
-    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('barcode', barcode)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+      }
+      console.error('Error fetching product:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch product' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
-
-  return NextResponse.json(product);
 }
 
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ barcode: string }> }
 ) {
-  const { barcode } = await params;
+  try {
+    const { barcode } = await params;
 
-  const products = await getProductsData();
-  const initialLength = products.length;
-  const filteredProducts = products.filter((p) => p.barcode !== barcode);
+    const { data, error } = await supabase
+      .from('products')
+      .delete()
+      .eq('barcode', barcode)
+      .select()
+      .single();
 
-  if (filteredProducts.length === initialLength) {
-    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+      }
+      console.error('Error deleting product:', error);
+      return NextResponse.json(
+        { error: 'Failed to delete product' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
-
-  await saveProductsData(filteredProducts);
-  return NextResponse.json({ success: true });
 }
 

@@ -1,1 +1,131 @@
-[]
+[
+  {
+    "id": "TXN1767245950720",
+    "date": "2026-01-01T05:39:10.720Z",
+    "items": [
+      {
+        "barcode": "1009",
+        "name": "Granola Mix",
+        "category": "Food",
+        "price": 7.99,
+        "cost": 4.2,
+        "stock": 22,
+        "quantity": 1
+      },
+      {
+        "barcode": "1010",
+        "name": "Coconut Water",
+        "category": "Beverages",
+        "price": 2.99,
+        "cost": 1.5,
+        "stock": 60,
+        "quantity": 1
+      },
+      {
+        "barcode": "1006",
+        "name": "Almond Milk",
+        "category": "Beverages",
+        "price": 4.99,
+        "cost": 2.8,
+        "stock": 35,
+        "quantity": 1
+      },
+      {
+        "barcode": "1005",
+        "name": "Organic Honey",
+        "category": "Food",
+        "price": 8.99,
+        "cost": 5,
+        "stock": 20,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 24.96,
+    "tax": 1.9968000000000001,
+    "total": 26.9568,
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "TXN1767245979589",
+    "date": "2026-01-01T05:39:39.589Z",
+    "items": [
+      {
+        "barcode": "1007",
+        "name": "Dark Chocolate Bar",
+        "category": "Food",
+        "price": 3.99,
+        "cost": 2,
+        "stock": 50,
+        "quantity": 1
+      },
+      {
+        "barcode": "1008",
+        "name": "Green Tea",
+        "category": "Beverages",
+        "price": 6.49,
+        "cost": 3.5,
+        "stock": 28,
+        "quantity": 1
+      },
+      {
+        "barcode": "1004",
+        "name": "Greek Yogurt",
+        "category": "Food",
+        "price": 4.29,
+        "cost": 2.1,
+        "stock": 40,
+        "quantity": 2
+      }
+    ],
+    "subtotal": 19.060000000000002,
+    "tax": 1.5248000000000002,
+    "total": 20.5848,
+    "paymentMethod": "cash"
+  },
+  {
+    "id": "TXN1767246121398",
+    "date": "2026-01-01T05:42:01.398Z",
+    "items": [
+      {
+        "barcode": "1001",
+        "name": "Organic Coffee Beans",
+        "category": "Beverages",
+        "price": 12.99,
+        "cost": 7.5,
+        "stock": 45,
+        "quantity": 1
+      },
+      {
+        "barcode": "1002",
+        "name": "Whole Wheat Bread",
+        "category": "Food",
+        "price": 3.49,
+        "cost": 1.8,
+        "stock": 30,
+        "quantity": 1
+      },
+      {
+        "barcode": "1004",
+        "name": "Greek Yogurt",
+        "category": "Food",
+        "price": 4.29,
+        "cost": 2.1,
+        "stock": 38,
+        "quantity": 1
+      },
+      {
+        "barcode": "1003",
+        "name": "Fresh Orange Juice",
+        "category": "Beverages",
+        "price": 5.99,
+        "cost": 3.2,
+        "stock": 25,
+        "quantity": 4
+      }
+    ],
+    "subtotal": 44.730000000000004,
+    "tax": 3.5784000000000002,
+    "total": 48.308400000000006,
+    "paymentMethod": "digital"
+  }
+]

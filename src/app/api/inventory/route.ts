@@ -1,72 +1,93 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-import { Product, StockAdjustmentType } from '@/types';
-import { calculateDashboardStats } from '@/lib/utils/calculations';
-
-const PRODUCTS_DATA_FILE = path.join(process.cwd(), 'data', 'products.json');
-const SALES_DATA_FILE = path.join(process.cwd(), 'data', 'sales.json');
-
-async function getProductsData(): Promise<Product[]> {
-  try {
-    const data = await fs.readFile(PRODUCTS_DATA_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
-
-async function saveProductsData(products: Product[]): Promise<void> {
-  await fs.mkdir(path.dirname(PRODUCTS_DATA_FILE), { recursive: true });
-  await fs.writeFile(PRODUCTS_DATA_FILE, JSON.stringify(products, null, 2));
-}
-
-async function getSalesData(): Promise<any[]> {
-    try {
-      const data = await fs.readFile(SALES_DATA_FILE, 'utf-8');
-      return JSON.parse(data);
-    } catch {
-      return [];
-    }
-  }
+import { supabase } from '@/lib/supabase/client';
+import { StockAdjustmentType } from '@/types';
 
 export async function GET() {
-  const products = await getProductsData();
-  const sales = await getSalesData();
-  const stats = calculateDashboardStats(products, sales); // Reuse dashboard stats for overall inventory
+  try {
+    // Get all products
+    const { data: products, error: productsError } = await supabase
+      .from('products')
+      .select('*')
+      .order('name');
 
-  return NextResponse.json({
-    totalProducts: stats.products,
-    totalValue: stats.inventoryValue,
-    lowStock: stats.lowStock,
-    totalUnits: products.reduce((sum, p) => sum + p.stock, 0),
-    products: products, // Also return full product list for inventory table
-  });
+    if (productsError) {
+      console.error('Error fetching products:', productsError);
+      return NextResponse.json(
+        { error: 'Failed to fetch products' },
+        { status: 500 }
+      );
+    }
+
+    // Calculate inventory stats
+    const totalProducts = products?.length || 0;
+    const totalValue = products?.reduce((sum, p) => sum + (p.stock * p.cost), 0) || 0;
+    const lowStock = products?.filter((p) => p.stock < 20).length || 0;
+    const totalUnits = products?.reduce((sum, p) => sum + p.stock, 0) || 0;
+
+    return NextResponse.json({
+      totalProducts,
+      totalValue,
+      lowStock,
+      totalUnits,
+      products: products || [],
+    });
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }
 
 export async function PUT(request: NextRequest) {
-  const { barcode, type, quantity }: { barcode: string; type: StockAdjustmentType; quantity: number } = await request.json();
-  const products = await getProductsData();
-  const productIndex = products.findIndex((p) => p.barcode === barcode);
+  try {
+    const { barcode, type, quantity }: { barcode: string; type: StockAdjustmentType; quantity: number } = await request.json();
 
-  if (productIndex === -1) {
-    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    // Get current product
+    const { data: product, error: fetchError } = await supabase
+      .from('products')
+      .select('*')
+      .eq('barcode', barcode)
+      .single();
+
+    if (fetchError || !product) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+
+    // Calculate new stock
+    let newStock = product.stock;
+    if (type === 'add') {
+      newStock += quantity;
+    } else if (type === 'remove') {
+      newStock = Math.max(0, newStock - quantity);
+    } else if (type === 'set') {
+      newStock = quantity;
+    }
+
+    // Update product stock
+    const { data: updatedProduct, error: updateError } = await supabase
+      .from('products')
+      .update({ stock: newStock })
+      .eq('barcode', barcode)
+      .select()
+      .single();
+
+    if (updateError) {
+      console.error('Error updating stock:', updateError);
+      return NextResponse.json(
+        { error: 'Failed to update stock' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(updatedProduct);
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
-
-  const product = products[productIndex];
-  let newStock = product.stock;
-
-  if (type === 'add') {
-    newStock += quantity;
-  } else if (type === 'remove') {
-    newStock = Math.max(0, newStock - quantity);
-  } else if (type === 'set') {
-    newStock = quantity;
-  }
-
-  products[productIndex] = { ...product, stock: newStock };
-  await saveProductsData(products);
-
-  return NextResponse.json(products[productIndex]);
 }
 
