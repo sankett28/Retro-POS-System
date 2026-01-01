@@ -11,13 +11,7 @@ import { formatCurrency } from '@/lib/utils/formatters';
 
 export default function InventoryTable() {
   const { products } = useApp();
-  const [isStockModalOpen, setIsStockModalOpen] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
-
-  const handleAdjustStock = (product: Product) => {
-    setCurrentProduct(product);
-    setIsStockModalOpen(true);
-  };
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   return (
     <div className="card">
@@ -69,7 +63,7 @@ export default function InventoryTable() {
                       <Button
                         variant="stock"
                         size="sm"
-                        onClick={() => handleAdjustStock(product)}
+                        onClick={() => setSelectedProduct(product)}
                         Icon={PackagePlus}
                       >
                         Adjust
@@ -83,11 +77,13 @@ export default function InventoryTable() {
         </tbody>
       </table>
 
-      <StockModal
-        isOpen={isStockModalOpen}
-        onClose={() => setIsStockModalOpen(false)}
-        product={currentProduct}
-      />
+      {selectedProduct && (
+        <StockModal
+          isOpen={!!selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          product={selectedProduct}
+        />
+      )}
     </div>
   );
 }

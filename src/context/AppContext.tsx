@@ -97,12 +97,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const createProduct = async (product: Product) => {
-    try {
-      await productsApi.createProduct(product);
-      await refreshData();
-    } catch (error: any) {
-      alert(error.message);
-    }
+    await productsApi.createProduct(product);
+    await refreshData();
   };
 
   const updateProduct = async (product: Product) => {

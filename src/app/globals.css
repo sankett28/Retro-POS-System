@@ -245,7 +245,16 @@ body {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -277,7 +286,6 @@ body {
 }
 
 .card:hover {
-    transform: translateY(-2px);
     box-shadow: 0 4px 16px var(--shadow);
 }
 

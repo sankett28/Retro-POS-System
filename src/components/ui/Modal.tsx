@@ -30,10 +30,17 @@ export default function Modal({
 
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+      
+      // Prevent layout jump by compensating for scrollbar width
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
     } else {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset'; // Restore scrolling
+      document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
     }
 
     return () => {

@@ -10,12 +10,14 @@ interface ProductFormProps {
   initialData?: Product | null;
   onSubmit: (product: Product) => void;
   onCancel: () => void;
+  externalError?: string;
 }
 
 export default function ProductForm({
   initialData,
   onSubmit,
   onCancel,
+  externalError,
 }: ProductFormProps) {
   const [product, setProduct] = useState<Product>(() =>
     initialData
@@ -51,7 +53,11 @@ export default function ProductForm({
     const { id, value } = e.target;
     setProduct((prev) => ({
       ...prev,
-      [id]: id === 'price' || id === 'cost' ? parseFloat(value) : id === 'stock' ? parseInt(value) : value,
+      [id]: id === 'price' || id === 'cost'
+        ? (isNaN(parseFloat(value)) ? 0 : parseFloat(value))
+        : id === 'stock'
+        ? (isNaN(parseInt(value)) ? 0 : parseInt(value))
+        : value,
     }));
   };
 
@@ -85,6 +91,11 @@ export default function ProductForm({
 
   return (
     <form onSubmit={handleSubmit}>
+      {externalError && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+          {externalError}
+        </div>
+      )}
       <div className="form-group">
         <label htmlFor="barcode">Barcode</label>
         <input

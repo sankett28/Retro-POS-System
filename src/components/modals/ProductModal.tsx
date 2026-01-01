@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@/components/ui/Modal';
 import ProductForm from '@/components/products/ProductForm';
 import { Product } from '@/types';
@@ -18,14 +18,25 @@ export default function ProductModal({
   initialData,
 }: ProductModalProps) {
   const { createProduct, updateProduct } = useApp();
+  const [externalError, setExternalError] = useState<string>('');
+
+  useEffect(() => {
+    // Clear external error when modal opens/closes or initialData changes
+    setExternalError('');
+  }, [isOpen, initialData]);
 
   const handleSubmit = async (product: Product) => {
-    if (initialData) {
-      await updateProduct(product);
-    } else {
-      await createProduct(product);
+    try {
+      setExternalError(''); // Clear any previous errors
+      if (initialData) {
+        await updateProduct(product);
+      } else {
+        await createProduct(product);
+      }
+      onClose();
+    } catch (error: any) {
+      setExternalError(error.message);
     }
-    onClose();
   };
 
   return (
@@ -34,6 +45,7 @@ export default function ProductModal({
         initialData={initialData}
         onSubmit={handleSubmit}
         onCancel={onClose}
+        externalError={externalError}
       />
     </Modal>
   );
