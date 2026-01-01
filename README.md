@@ -1,8 +1,34 @@
 # RetroPos - Modern Point of Sale System
 
-This is a modern Point of Sale (POS) system application built with Next.js 16, React 18, and TypeScript. It provides a comprehensive solution for managing sales, products, inventory, and reports. The application features a single-server architecture with integrated frontend and backend, using JSON files for data persistence.
+This is a modern Point of Sale (POS) system application built with a **hybrid stack**: Next.js frontend and Python FastAPI backend. It provides a comprehensive solution for managing sales, products, inventory, and reports.
 
-## Features
+## 🏗️ Project Structure
+
+This project follows a **monorepo-style** layout with clear separation between frontend and backend:
+
+```
+Retro-POS-System/
+├── backend/                 # 🐍 Python FastAPI Backend
+│   ├── main.py             # FastAPI application
+│   ├── models.py           # Pydantic models
+│   ├── database.py         # JSON file operations
+│   ├── requirements.txt    # Python dependencies
+│   └── README.md           # Backend documentation
+│
+├── frontend/                # ⚛️ Next.js Frontend
+│   ├── src/                # Source code
+│   ├── package.json        # Node dependencies
+│   ├── next.config.js      # Next.js configuration
+│   └── tsconfig.json       # TypeScript configuration
+│
+├── data/                    # 💾 Shared Data Storage
+│   ├── products.json       # Product catalog
+│   └── sales.json          # Sales transaction history
+│
+└── README.md               # This file
+```
+
+## ✨ Features
 
 - **Admin Dashboard**: Real-time overview of key business metrics including revenue, profit, taxes, transactions, inventory value, and low stock alerts.
 - **Point of Sale (POS)**: Efficiently process sales with barcode scanning, quick product selection, and multiple payment methods (Cash, Card, Digital).
@@ -12,145 +38,83 @@ This is a modern Point of Sale (POS) system application built with Next.js 16, R
 - **Receipt Generation**: Print and view detailed receipts for completed transactions.
 - **Keyboard Shortcuts**: Quick navigation using Alt+D (Dashboard), Alt+P (POS), Alt+I (Inventory), Alt+R (Reports).
 
-## Getting Started
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18 or higher) and npm
+- **Python** (v3.8 or higher) and pip
 
 ### Installation
 
-1. Clone the repository:
-
+1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd retro-pos-system
+   cd Retro-POS-System
    ```
 
-2. Install dependencies:
-
+2. **Setup Backend:**
    ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
+
+3. **Setup Frontend:**
+   ```bash
+   cd ../frontend
    npm install
-   # or
-   yarn install
    ```
 
 ### Development
 
-To run the application in development mode:
+You need to run **both** the backend and frontend servers:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+1. **Start the Backend Server** (Terminal 1):
+   ```bash
+   cd backend
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
+   
+   The API will be available at `http://localhost:8000`
+   - API Documentation: `http://localhost:8000/docs`
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+2. **Start the Frontend Server** (Terminal 2):
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+   
+   The application will be available at `http://localhost:3000`
 
 ### Building for Production
 
-To build the application for production:
-
+**Backend:**
 ```bash
+cd backend
+# Production deployment instructions in backend/README.md
+```
+
+**Frontend:**
+```bash
+cd frontend
 npm run build
-# or
-yarn build
-```
-
-Then, to start the production server:
-
-```bash
 npm run start
-# or
-yarn start
 ```
 
-## Project Structure
+## 📡 API Endpoints
 
-```
-retro-pos-system/
-├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── api/                # API routes (backend)
-│   │   │   ├── products/       # Product endpoints
-│   │   │   ├── sales/          # Sales endpoints
-│   │   │   ├── inventory/      # Inventory endpoints
-│   │   │   └── dashboard/      # Dashboard endpoints
-│   │   ├── layout.tsx          # Root layout with AppProvider
-│   │   ├── page.tsx            # Main page with view routing
-│   │   └── globals.css         # Global styles
-│   ├── components/             # React components
-│   │   ├── dashboard/          # Dashboard components
-│   │   ├── pos/                # POS components
-│   │   ├── products/           # Product management components
-│   │   ├── inventory/          # Inventory components
-│   │   ├── reports/            # Reports components
-│   │   ├── layout/             # Layout components (Header, Navigation)
-│   │   ├── modals/             # Modal components
-│   │   └── ui/                 # Reusable UI components
-│   ├── context/                # React Context
-│   │   └── AppContext.tsx      # Global state management
-│   ├── hooks/                  # Custom React hooks
-│   │   ├── useCart.ts          # Cart management hook
-│   │   ├── useProducts.ts      # Products management hook
-│   │   └── useSales.ts         # Sales management hook
-│   ├── lib/
-│   │   ├── api/                # API client layer
-│   │   │   ├── client.ts       # Generic API fetch utility
-│   │   │   ├── products.ts    # Product API calls
-│   │   │   ├── sales.ts        # Sales API calls
-│   │   │   └── inventory.ts   # Inventory API calls
-│   │   └── utils/              # Utility functions
-│   │       ├── formatters.ts  # Currency, date, time formatters
-│   │       ├── validators.ts  # Input validation functions
-│   │       └── calculations.ts # Business logic calculations
-│   └── types/                  # TypeScript definitions
-│       └── index.ts            # Type definitions
-├── data/                        # Data persistence
-│   ├── products.json           # Product data
-│   └── sales.json             # Sales transaction data
-├── package.json                 # Dependencies and scripts
-├── tsconfig.json               # TypeScript configuration
-├── next.config.js              # Next.js configuration
-└── README.md                   # This file
-```
-
-## Technologies Used
-
-- **Next.js 16.1.1**: App Router with API routes for full-stack functionality
-- **React 18**: Modern React with hooks and context API
-- **TypeScript**: Type-safe development
-- **Lucide React**: Icon library for UI components
-- **ESLint 9**: Code quality and linting
-- **Node.js**: Runtime environment
-
-## Implementation Status
-
-✅ **Completed Features:**
-- Full project structure with separation of concerns (frontend/backend)
-- TypeScript type definitions for all data models
-- API routes for products, sales, inventory, and dashboard
-- React Context API for global state management
-- Custom hooks for cart, products, and sales management
-- Reusable UI components (Button, Modal, Badge, Input)
-- Dashboard with real-time statistics
-- POS system with cart management and payment processing
-- Product CRUD operations with validation
-- Inventory management with stock adjustments
-- Sales reports with date filtering
-- Receipt generation and printing
-- Keyboard shortcuts for navigation
-- Data persistence using JSON files
-- Sample product data included
-
-## API Endpoints
+The FastAPI backend provides the following endpoints:
 
 ### Products
 - `GET /api/products` - Get all products
-- `GET /api/products/[barcode]` - Get product by barcode
+- `GET /api/products/{barcode}` - Get product by barcode
 - `POST /api/products` - Create new product
 - `PUT /api/products` - Update existing product
-- `DELETE /api/products/[barcode]` - Delete product
+- `DELETE /api/products/{barcode}` - Delete product
 
 ### Sales
-- `GET /api/sales` - Get all sales (with optional date filtering)
-- `GET /api/sales/[id]` - Get sale by ID
+- `GET /api/sales?startDate=...&endDate=...` - Get all sales (with optional date filtering)
+- `GET /api/sales/{id}` - Get sale by ID
 - `POST /api/sales` - Create new sale (automatically updates product stock)
 
 ### Inventory
@@ -161,6 +125,49 @@ retro-pos-system/
 ### Dashboard
 - `GET /api/dashboard` - Get dashboard statistics
 
-## Contribution
+## 🛠️ Technologies Used
+
+### Frontend
+- **Next.js 16.1.1**: React framework with App Router
+- **React 18**: Modern React with hooks and context API
+- **TypeScript**: Type-safe development
+- **Lucide React**: Icon library for UI components
+
+### Backend
+- **FastAPI**: Modern Python web framework
+- **Pydantic**: Data validation using Python type annotations
+- **Uvicorn**: ASGI server for FastAPI
+
+## 📁 Data Storage
+
+The application uses JSON files for data persistence:
+- `data/products.json` - Product catalog
+- `data/sales.json` - Sales transaction history
+
+The backend automatically creates these files if they don't exist.
+
+## 🔧 Configuration
+
+### Environment Variables (Optional)
+
+Create a `.env.local` file in the `frontend/` directory to customize the API URL:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+If not set, it defaults to `http://localhost:8000`.
+
+## 📚 Additional Documentation
+
+- **Backend Documentation**: See `backend/README.md`
+- **Migration Guide**: See `MIGRATION_GUIDE.md` (if migrating from monolith)
+- **Architecture**: See `ARCHITECTURE.md` (legacy documentation)
+
+## 🤝 Contribution
 
 Feel free to fork this repository and contribute! Please ensure your code adheres to the project's coding standards and includes appropriate tests.
+
+## 📝 License
+
+[Add your license information here]
