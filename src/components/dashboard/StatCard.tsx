@@ -44,7 +44,7 @@ export default function StatCard({
 
   return (
     <div className={`stat-card ${variantStyles[variant]}`}>
-      <div className="stat-icon bg-white border-border border-border-width rounded-md flex items-center justify-center p-2">
+      <div className="stat-icon bg-white border-border border-border-width rounded-[var(--radius-md)] flex items-center justify-center p-2">
         <Icon size={32} className={iconVariantStyles[variant]} />
       </div>
       <div className="stat-content">

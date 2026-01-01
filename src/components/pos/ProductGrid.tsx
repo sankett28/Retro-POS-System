@@ -34,7 +34,7 @@ export default function ProductGrid() {
       </div>
       <div className="product-grid" id="product-grid">
         {filteredProducts.length === 0 ? (
-          <p style={{ textAlign: 'center', color: 'var(--text-light)', gridColumn: '1 / -1', padding: '2rem 0' }}>No products found</p>
+          <p className="empty-message">No products found</p>
         ) : (
           filteredProducts.map((product) => (
             <div

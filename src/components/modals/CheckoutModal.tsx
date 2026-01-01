@@ -23,7 +23,7 @@ export default function CheckoutModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Process Payment" maxWidth="max-w-lg">
       <div className="checkout-summary text-center">
-        <div className="checkout-total bg-primary border-border border-border-width p-spacing-xl rounded-md mb-spacing-xl">
+        <div className="checkout-total">
           <span className="block text-base font-semibold mb-spacing-sm">Total Amount:</span>
           <span id="checkout-total" className="block text-4xl font-bold">{formatCurrency(total)}</span>
         </div>
