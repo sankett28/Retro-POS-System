@@ -83,7 +83,7 @@ body {
     gap: var(--spacing-md);
 }
 
-.logo i {
+.logo svg {
     width: 36px;
     height: 36px;
     stroke-width: 2.5;
@@ -126,6 +126,11 @@ body {
     background: var(--primary);
 }
 
+.btn-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
 .btn-icon i {
     width: 20px;
     height: 20px;
@@ -145,6 +150,12 @@ body {
     align-items: center;
     gap: var(--spacing-sm);
     box-shadow: 0 2px 8px var(--shadow);
+    font-family: inherit;
+}
+
+.btn-primary svg {
+    width: 16px;
+    height: 16px;
 }
 
 .btn-primary:hover {
@@ -166,6 +177,12 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    font-family: inherit;
+}
+
+.btn-secondary svg {
+    width: 16px;
+    height: 16px;
 }
 
 .btn-secondary:hover {
@@ -194,6 +211,12 @@ body {
     justify-content: center;
     gap: var(--spacing-sm);
     box-shadow: 0 4px 16px rgba(107, 207, 127, 0.3);
+    font-family: inherit;
+}
+
+.btn-checkout svg {
+    width: 20px;
+    height: 20px;
 }
 
 .btn-checkout:hover {
@@ -320,6 +343,18 @@ body {
     font-size: 1rem;
     background: white;
     font-weight: 500;
+    font-family: inherit;
+}
+
+.barcode-scanner button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.barcode-scanner button svg {
+    width: 16px;
+    height: 16px;
 }
 
 .barcode-scanner input:focus {
@@ -354,6 +389,13 @@ body {
     text-align: center;
     padding: var(--spacing-2xl);
     color: var(--text-light);
+}
+
+.empty-cart svg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
 }
 
 .empty-cart i {
@@ -418,6 +460,12 @@ body {
     align-items: center;
     justify-content: center;
     transition: var(--transition);
+    padding: 0;
+}
+
+.quantity-control button svg {
+    width: 16px;
+    height: 16px;
 }
 
 .quantity-control button:hover {
@@ -447,6 +495,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.remove-item svg {
+    width: 16px;
+    height: 16px;
 }
 
 .remove-item:hover {
@@ -493,13 +546,14 @@ body {
 
 .search-input {
     width: 100%;
+    max-width: 300px;
     padding: var(--spacing-md);
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
     font-size: 1rem;
     background: white;
-    margin-bottom: var(--spacing-lg);
     font-weight: 500;
+    font-family: inherit;
 }
 
 .search-input:focus {
@@ -530,6 +584,13 @@ body {
     border-color: var(--primary);
     transform: translateY(-4px);
     box-shadow: 0 4px 12px var(--shadow);
+}
+
+.product-card svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--accent);
 }
 
 .product-card i {
@@ -609,23 +670,32 @@ body {
     background: white;
 }
 
+.stat-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
 .stat-icon i {
     width: 32px;
     height: 32px;
 }
 
+.stat-icon.yellow svg,
 .stat-icon.yellow i {
     color: var(--primary-dark);
 }
 
+.stat-icon.green svg,
 .stat-icon.green i {
     color: var(--secondary);
 }
 
+.stat-icon.blue svg,
 .stat-icon.blue i {
     color: var(--accent);
 }
 
+.stat-icon.orange svg,
 .stat-icon.orange i {
     color: var(--accent-orange);
 }
@@ -911,6 +981,11 @@ body {
     background: var(--primary-light);
     transform: translateY(-4px);
     box-shadow: 0 4px 12px var(--shadow);
+}
+
+.payment-btn svg {
+    width: 48px;
+    height: 48px;
 }
 
 .payment-btn i {

@@ -16,11 +16,21 @@ export default function Home() {
     <>
       <Header activeView={activeView} setActiveView={setActiveView} />
       <main className="main-container">
-        {activeView === 'dashboard' && <DashboardView />}
-        {activeView === 'pos' && <POSView />}
-        {activeView === 'products' && <ProductsView />}
-        {activeView === 'inventory' && <InventoryView />}
-        {activeView === 'reports' && <ReportsView />}
+        <div id="dashboard-view" className={`view ${activeView === 'dashboard' ? 'active' : ''}`}>
+          {activeView === 'dashboard' && <DashboardView />}
+        </div>
+        <div id="pos-view" className={`view ${activeView === 'pos' ? 'active' : ''}`}>
+          {activeView === 'pos' && <POSView />}
+        </div>
+        <div id="products-view" className={`view ${activeView === 'products' ? 'active' : ''}`}>
+          {activeView === 'products' && <ProductsView />}
+        </div>
+        <div id="inventory-view" className={`view ${activeView === 'inventory' ? 'active' : ''}`}>
+          {activeView === 'inventory' && <InventoryView />}
+        </div>
+        <div id="reports-view" className={`view ${activeView === 'reports' ? 'active' : ''}`}>
+          {activeView === 'reports' && <ReportsView />}
+        </div>
       </main>
     </>
   );

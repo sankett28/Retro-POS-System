@@ -49,46 +49,41 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
           <h1>RetroPos</h1>
         </div>
         <div className="header-actions">
-          <Button
-            variant="icon"
-            className={activeView === 'dashboard' ? 'active' : ''}
+          <button
+            className={`btn-icon ${activeView === 'dashboard' ? 'active' : ''}`}
             onClick={() => setActiveView('dashboard')}
             title="Dashboard"
-            Icon={LayoutDashboard}
-            iconSize={20}
-          />
-          <Button
-            variant="icon"
-            className={activeView === 'pos' ? 'active' : ''}
+          >
+            <LayoutDashboard size={20} />
+          </button>
+          <button
+            className={`btn-icon ${activeView === 'pos' ? 'active' : ''}`}
             onClick={() => setActiveView('pos')}
             title="Point of Sale"
-            Icon={ShoppingCart}
-            iconSize={20}
-          />
-          <Button
-            variant="icon"
-            className={activeView === 'products' ? 'active' : ''}
+          >
+            <ShoppingCart size={20} />
+          </button>
+          <button
+            className={`btn-icon ${activeView === 'products' ? 'active' : ''}`}
             onClick={() => setActiveView('products')}
             title="Products"
-            Icon={Package}
-            iconSize={20}
-          />
-          <Button
-            variant="icon"
-            className={activeView === 'inventory' ? 'active' : ''}
+          >
+            <Package size={20} />
+          </button>
+          <button
+            className={`btn-icon ${activeView === 'inventory' ? 'active' : ''}`}
             onClick={() => setActiveView('inventory')}
             title="Inventory"
-            Icon={Warehouse}
-            iconSize={20}
-          />
-          <Button
-            variant="icon"
-            className={activeView === 'reports' ? 'active' : ''}
+          >
+            <Warehouse size={20} />
+          </button>
+          <button
+            className={`btn-icon ${activeView === 'reports' ? 'active' : ''}`}
             onClick={() => setActiveView('reports')}
             title="Reports"
-            Icon={BarChart3}
-            iconSize={20}
-          />
+          >
+            <BarChart3 size={20} />
+          </button>
         </div>
       </div>
     </header>

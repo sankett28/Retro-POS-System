@@ -18,21 +18,27 @@ export default function CartItemComponent({
   onRemove,
 }: CartItemProps) {
   return (
-    <div className="cart-item bg-white border-border border-border-width rounded-md p-4 mb-2 flex justify-between items-center transition-all duration-300 ease-in-out hover:border-primary hover:shadow-sm">
+    <div className="cart-item">
       <div className="cart-item-info">
-        <h4 className="font-semibold mb-1">{item.name}</h4>
-        <p className="text-text-secondary text-sm">{formatCurrency(item.price)} each</p>
+        <h4>{item.name}</h4>
+        <p>{formatCurrency(item.price)} each</p>
       </div>
-      <div className="cart-item-actions flex items-center space-x-4">
-        <div className="quantity-control flex items-center space-x-2 bg-bg-primary border-border border-border-width rounded-md p-1">
-          <Button variant="icon" size="sm" onClick={() => onUpdateQuantity(item.barcode, -1)} Icon={Minus} iconSize={16} />
-          <span className="min-w-[30px] text-center font-semibold">{item.quantity}</span>
-          <Button variant="icon" size="sm" onClick={() => onUpdateQuantity(item.barcode, 1)} Icon={Plus} iconSize={16} />
+      <div className="cart-item-actions">
+        <div className="quantity-control">
+          <button onClick={() => onUpdateQuantity(item.barcode, -1)}>
+            <Minus size={16} />
+          </button>
+          <span>{item.quantity}</span>
+          <button onClick={() => onUpdateQuantity(item.barcode, 1)}>
+            <Plus size={16} />
+          </button>
         </div>
-        <div className="cart-item-price font-bold text-lg">
+        <div className="cart-item-price">
           {formatCurrency(item.price * item.quantity)}
         </div>
-        <Button variant="delete" size="sm" onClick={() => onRemove(item.barcode)} Icon={X} iconSize={16} />
+        <button className="remove-item" onClick={() => onRemove(item.barcode)}>
+          <X size={16} />
+        </button>
       </div>
     </div>
   );

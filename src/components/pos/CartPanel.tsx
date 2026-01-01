@@ -71,16 +71,16 @@ export default function CartPanel() {
 
   return (
     <> 
-      <div className="cart-panel bg-bg-card border-border border-border-width rounded-lg p-spacing-lg flex flex-col shadow-md">
-        <div className="panel-header flex justify-between items-center mb-spacing-lg pb-spacing-md border-b-2 border-bg-primary">
-          <h2 className="text-lg font-bold">Current Sale</h2>
-          <Button variant="secondary" size="sm" onClick={clearCart} Icon={Trash2}>
-            Clear
-          </Button>
+      <div className="cart-panel">
+        <div className="panel-header">
+          <h2>Current Sale</h2>
+          <button className="btn-secondary btn-sm" onClick={clearCart}>
+            <Trash2 size={16} /> Clear
+          </button>
         </div>
 
-        <div className="barcode-scanner flex space-x-2 mb-spacing-lg">
-          <Input
+        <div className="barcode-scanner">
+          <input
             type="text"
             id="barcode-input"
             placeholder="Scan or enter barcode..."
@@ -89,15 +89,15 @@ export default function CartPanel() {
             onKeyPress={handleBarcodeInput}
             ref={barcodeRef}
           />
-          <Button variant="primary" onClick={handleScanBarcode} Icon={Scan}>
-            Scan
-          </Button>
+          <button className="btn-primary" onClick={handleScanBarcode}>
+            <Scan size={16} /> Scan
+          </button>
         </div>
 
-        <div className="cart-items flex-1 overflow-y-auto mb-spacing-lg pr-2">
+        <div className="cart-items" id="cart-items">
           {cart.length === 0 ? (
-            <div className="empty-cart text-center p-spacing-2xl text-text-light">
-              <ShoppingCart size={64} className="mb-spacing-md opacity-50 mx-auto" />
+            <div className="empty-cart">
+              <ShoppingCart size={64} />
               <p>Cart is empty</p>
               <small>Scan items to begin</small>
             </div>
@@ -113,24 +113,24 @@ export default function CartPanel() {
           )}
         </div>
 
-        <div className="cart-summary bg-primary-light border-border border-border-width rounded-md p-spacing-lg mb-spacing-lg">
-          <div className="flex justify-between py-1.5 text-text-secondary font-medium">
+        <div className="cart-summary">
+          <div className="summary-row">
             <span>Subtotal:</span>
-            <span>{formatCurrency(subtotal)}</span>
+            <span id="subtotal">{formatCurrency(subtotal)}</span>
           </div>
-          <div className="flex justify-between py-1.5 text-text-secondary font-medium">
+          <div className="summary-row">
             <span>Tax (8%):</span>
-            <span>{formatCurrency(tax)}</span>
+            <span id="tax">{formatCurrency(tax)}</span>
           </div>
-          <div className="flex justify-between pt-spacing-md mt-spacing-sm border-t-2 border-border text-lg font-bold text-text-primary">
+          <div className="summary-row total">
             <span>Total:</span>
-            <span>{formatCurrency(total)}</span>
+            <span id="total">{formatCurrency(total)}</span>
           </div>
         </div>
 
-        <Button variant="checkout" onClick={handleProcessCheckout} Icon={CreditCard} iconSize={20}>
-          Process Payment
-        </Button>
+        <button className="btn-checkout" onClick={handleProcessCheckout}>
+          <CreditCard size={20} /> Process Payment
+        </button>
       </div>
 
       <CheckoutModal
