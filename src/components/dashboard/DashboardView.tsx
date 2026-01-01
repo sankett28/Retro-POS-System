@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { DollarSign, TrendingUp, Receipt, ShoppingBag, Package, Layers, AlertTriangle } from 'lucide-react';
+import { DollarSign, TrendingUp, Receipt, ShoppingBag, Package, Layers, AlertTriangle, RefreshCw } from 'lucide-react';
 import StatCard from './StatCard';
 import RecentTransactions from './RecentTransactions';
 import Button from '@/components/ui/Button';
@@ -19,7 +19,7 @@ export default function DashboardView() {
     <div className="view active">
       <div className="view-header">
         <h2>Admin Dashboard</h2>
-        <Button onClick={refreshData} Icon={TrendingUp}>
+        <Button onClick={refreshData} Icon={RefreshCw} variant="primary">
           Refresh
         </Button>
       </div>

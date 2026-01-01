@@ -106,7 +106,7 @@ body {
     border: var(--border-width) solid var(--border);
     color: var(--text-primary);
     padding: var(--spacing-sm);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg); /* Updated to var(--radius-lg) */
     cursor: pointer;
     transition: var(--transition);
     display: flex;
@@ -134,34 +134,6 @@ body {
 .btn-icon i {
     width: 20px;
     height: 20px;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: var(--text-primary);
-    border: var(--border-width) solid var(--border);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.9375rem;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    box-shadow: 0 2px 8px var(--shadow);
-    font-family: inherit;
-}
-
-.btn-primary svg {
-    width: 16px;
-    height: 16px;
-}
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px var(--shadow);
 }
 
 .btn-secondary {
@@ -422,6 +394,10 @@ body {
     box-shadow: 0 2px 8px var(--shadow);
 }
 
+.cart-item-info {
+    max-width: calc(100% - 180px); /* Adjust based on action button width */
+}
+
 .cart-item-info h4 {
     font-weight: 600;
     margin-bottom: var(--spacing-xs);
@@ -436,6 +412,8 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: flex-end; /* Push items to the right when wrapped */
 }
 
 .quantity-control {
@@ -446,6 +424,7 @@ body {
     border: var(--border-width) solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--spacing-xs);
+    margin-top: var(--spacing-sm); /* Add margin-top for wrapped items */
 }
 
 .quantity-control button {
@@ -463,11 +442,6 @@ body {
     padding: 0;
 }
 
-.quantity-control button svg {
-    width: 16px;
-    height: 16px;
-}
-
 .quantity-control button:hover {
     background: var(--primary);
     color: var(--text-primary);
@@ -482,6 +456,7 @@ body {
 .cart-item-price {
     font-weight: 700;
     font-size: 1.125rem;
+    flex-shrink: 0; /* Prevent price from shrinking */
 }
 
 .remove-item {
@@ -1093,6 +1068,7 @@ body {
 .date-input:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 217, 61, 0.2);
 }
 
 /* === RESPONSIVE === */
@@ -1166,3 +1142,18 @@ body {
     display: none;
 }
 
+@layer utilities {
+  .btn-primary {
+    background-color: var(--primary);
+    color: var(--text-primary);
+    border: var(--border-width) solid var(--border);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+}

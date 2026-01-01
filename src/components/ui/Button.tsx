@@ -20,20 +20,20 @@ export default function Button({
   const baseStyle = "flex items-center justify-center gap-2 font-semibold transition-all duration-300 ease-in-out";
   
   const variants = {
-    primary: "bg-primary text-text-primary border-border border-border-width shadow-md hover:bg-primary-dark hover:translate-y-[-2px] hover:shadow-lg",
-    secondary: "bg-bg-card text-text-primary border-border border-border-width hover:bg-bg-primary hover:translate-y-[-2px]",
-    icon: "bg-bg-card text-text-primary border-border border-border-width hover:bg-primary active:bg-primary-dark",
-    checkout: "w-full bg-secondary text-white border-border border-border-width shadow-secondary-soft hover:bg-secondary-dark hover:translate-y-[-2px] hover:shadow-secondary-strong",
-    delete: "bg-[#FF4444] text-white border-border border-border-width hover:bg-[#CC0000]",
-    edit: "bg-accent text-white border-border border-border-width hover:bg-[#3A7BC8]",
-    stock: "bg-accent-orange text-white border-border border-border-width hover:bg-[#E67A2E]",
-    payment: "bg-white text-text-primary border-border border-border-width hover:border-primary hover:bg-primary-light hover:translate-y-[-4px] hover:shadow-md",
+    primary: "bg-[var(--primary)] text-[var(--text-primary)] border-[var(--border-width)] border-[var(--border)] hover:bg-[var(--primary-dark)] hover:translate-y-[-2px]",
+    secondary: "bg-bg-card text-text-primary border-[var(--border-width)] border-[var(--border)] hover:bg-bg-primary hover:translate-y-[-2px]",
+    icon: "bg-bg-card text-text-primary border-[var(--border-width)] border-[var(--border)] hover:bg-primary active:bg-primary-dark",
+    checkout: "w-full bg-secondary text-white border-[var(--border-width)] border-[var(--border)] shadow-secondary-soft hover:bg-secondary-dark hover:translate-y-[-2px] hover:shadow-secondary-strong",
+    delete: "bg-[#FF4444] text-white border-[var(--border-width)] border-[var(--border)] hover:bg-[#CC0000]",
+    edit: "bg-accent text-white border-[var(--border-width)] border-[var(--border)] hover:bg-[#3A7BC8]",
+    stock: "bg-accent-orange text-white border-[var(--border-width)] border-[var(--border)] hover:bg-[#E67A2E]",
+    payment: "bg-white text-text-primary border-[var(--border-width)] border-[var(--border)] hover:border-primary hover:bg-primary-light hover:translate-y-[-4px] hover:shadow-md",
   };
 
   const sizes = {
-    sm: "px-3 py-1.5 text-sm rounded-md",
-    md: "px-4 py-2 text-base rounded-md",
-    lg: "px-6 py-3 text-lg rounded-lg",
+    sm: "px-3 py-2 text-sm",
+    md: "px-4 py-2.5 text-base",
+    lg: "px-6 py-3 text-lg",
   };
 
   const iconSizes = {
@@ -44,7 +44,7 @@ export default function Button({
 
   return (
     <button
-      className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`${baseStyle} ${variant === 'primary' ? 'btn-primary' : variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
       {Icon && <Icon size={iconSize || iconSizes[size]} />}
