@@ -20,7 +20,7 @@ export default function Button({
   const baseStyle = "flex items-center justify-center gap-2 font-semibold transition-all duration-300 ease-in-out";
   
   const variants = {
-    primary: "bg-[var(--primary)] text-[var(--text-primary)] border-[var(--border-width)] border-[var(--border)] hover:bg-[var(--primary-dark)] hover:translate-y-[-2px]",
+    primary: "btn-primary",
     secondary: "btn-secondary",
 
     icon: "btn-icon",
@@ -38,7 +38,7 @@ export default function Button({
   };
 
   const sizes = {
-    sm: "",
+    sm: "btn-sm",
     md: "",
     lg: "",
   };
@@ -51,8 +51,7 @@ export default function Button({
 
   return (
     <button
-      className={`${baseStyle} ${variant === 'primary' ? 'btn-primary' : variants[variant]} ${className}`}
-
+      className={`${baseStyle} ${variant === 'primary' ? 'btn-primary' : variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
       {Icon && <Icon size={iconSize || iconSizes[size]} />}

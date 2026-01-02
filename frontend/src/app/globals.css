@@ -83,7 +83,7 @@ body {
     gap: var(--spacing-md);
 }
 
-.logo i { /* Changed from .logo svg to .logo i to match index.html */
+.logo i {
     width: 36px;
     height: 36px;
     stroke-width: 2.5;
@@ -106,7 +106,7 @@ body {
     border: var(--border-width) solid var(--border);
     color: var(--text-primary);
     padding: var(--spacing-sm);
-    border-radius: var(--radius-lg); /* Updated to var(--radius-lg) */
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition);
     display: flex;
@@ -126,7 +126,7 @@ body {
     background: var(--primary);
 }
 
-.btn-icon i { /* Changed from .btn-icon svg to .btn-icon i to match index.html */
+.btn-icon i {
     width: 20px;
     height: 20px;
 }
@@ -144,13 +144,13 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Updated shadow */
+    box-shadow: 0 2px 8px var(--shadow);
 }
 
 .btn-primary:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Updated shadow */
+    box-shadow: 0 4px 16px var(--shadow);
 }
 
 .btn-secondary {
@@ -222,16 +222,7 @@ body {
 @keyframes fadeIn {
     from {
         opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
@@ -263,6 +254,7 @@ body {
 }
 
 .card:hover {
+    transform: translateY(-2px);
     box-shadow: 0 4px 16px var(--shadow);
 }
 
@@ -364,7 +356,7 @@ body {
     color: var(--text-light);
 }
 
-.empty-cart i { /* Changed from svg to i to match index.html */
+.empty-cart i {
     width: 64px;
     height: 64px;
     margin-bottom: var(--spacing-md);
@@ -540,7 +532,7 @@ body {
     box-shadow: 0 4px 12px var(--shadow);
 }
 
-.product-card i { /* Changed from svg to i to match index.html */
+.product-card i {
     width: 48px;
     height: 48px;
     margin-bottom: var(--spacing-sm);
@@ -617,24 +609,24 @@ body {
     background: white;
 }
 
-.stat-icon i { /* Changed from svg to i to match index.html */
+.stat-icon i {
     width: 32px;
     height: 32px;
 }
 
-.stat-icon.yellow i { /* Changed from svg to i to match index.html */
+.stat-icon.yellow i {
     color: var(--primary-dark);
 }
 
-.stat-icon.green i { /* Changed from svg to i to match index.html */
+.stat-icon.green i {
     color: var(--secondary);
 }
 
-.stat-icon.blue i { /* Changed from svg to i to match index.html */
+.stat-icon.blue i {
     color: var(--accent);
 }
 
-.stat-icon.orange i { /* Changed from svg to i to match index.html */
+.stat-icon.orange i {
     color: var(--accent-orange);
 }
 
@@ -921,7 +913,7 @@ body {
     box-shadow: 0 4px 12px var(--shadow);
 }
 
-.payment-btn i { /* Changed from svg to i to match index.html */
+.payment-btn i {
     width: 48px;
     height: 48px;
 }
@@ -1026,7 +1018,6 @@ body {
 .date-input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(255, 217, 61, 0.2);
 }
 
 /* === RESPONSIVE === */
@@ -1098,20 +1089,4 @@ body {
 
 .hidden {
     display: none;
-}
-
-@layer utilities {
-  .btn-primary {
-    background-color: var(--primary);
-    color: var(--text-primary);
-    border: var(--border-width) solid var(--border);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-  }
-
-  .btn-primary:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  }
 }

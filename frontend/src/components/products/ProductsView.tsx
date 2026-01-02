@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
-import ProductTable from './ProductTable';
 import ProductModal from '@/components/modals/ProductModal';
 import Button from '@/components/ui/Button';
 import { Product } from '@/types';
@@ -29,10 +28,23 @@ export default function ProductsView() {
           Add Product
         </Button>
       </div>
-      <ProductTable onEditProduct={(product) => {
-        setCurrentProduct(product);
-        setIsModalOpen(true);
-      }} />
+      <div className="card">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Barcode</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="products-table-body">
+            {/* Products will be loaded here */}
+          </tbody>
+        </table>
+      </div>
       <ProductModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

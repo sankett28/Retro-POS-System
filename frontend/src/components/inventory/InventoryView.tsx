@@ -2,8 +2,6 @@
 
 import React from 'react';
 import { Package, TrendingUp, AlertTriangle, Layers, Download } from 'lucide-react';
-import StatCard from '@/components/dashboard/StatCard';
-import InventoryTable from './InventoryTable';
 import Button from '@/components/ui/Button';
 import { useApp } from '@/context/AppContext';
 import { formatCurrency } from '@/lib/utils/formatters';
@@ -43,33 +41,61 @@ export default function InventoryView() {
       </div>
 
       <div className="dashboard-grid mb-8">
-        <StatCard
-          icon={Package}
-          value={totalProducts}
-          label="Total Products"
-          variant="blue"
-        />
-        <StatCard
-          icon={TrendingUp}
-          value={formatCurrency(totalValue)}
-          label="Inventory Value"
-          variant="green"
-        />
-        <StatCard
-          icon={AlertTriangle}
-          value={lowStock}
-          label="Low Stock Items"
-          variant="orange"
-        />
-        <StatCard
-          icon={Layers}
-          value={totalUnits}
-          label="Total Units"
-          variant="yellow"
-        />
+        <div className="stat-card blue">
+          <div className="stat-icon blue">
+            <Package size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{totalProducts}</h3>
+            <p>Total Products</p>
+          </div>
+        </div>
+        <div className="stat-card green">
+          <div className="stat-icon green">
+            <TrendingUp size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{formatCurrency(totalValue)}</h3>
+            <p>Inventory Value</p>
+          </div>
+        </div>
+        <div className="stat-card orange">
+          <div className="stat-icon orange">
+            <AlertTriangle size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{lowStock}</h3>
+            <p>Low Stock Items</p>
+          </div>
+        </div>
+        <div className="stat-card yellow">
+          <div className="stat-icon yellow">
+            <Layers size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{totalUnits}</h3>
+            <p>Total Units</p>
+          </div>
+        </div>
       </div>
 
-      <InventoryTable />
+      <div className="card">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Barcode</th>
+              <th>Current Stock</th>
+              <th>Status</th>
+              <th>Value</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-table-body">
+            {/* Inventory will be loaded here */}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

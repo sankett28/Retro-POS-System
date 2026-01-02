@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
 import { Printer, Check } from 'lucide-react';
 import { Sale } from '@/types';
@@ -25,22 +24,22 @@ export default function ReceiptModal({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Receipt" maxWidth="max-w-md">
-      <div className="receipt-content">
-        <div className="receipt bg-white border-dashed border-2 border-border p-spacing-xl mb-spacing-lg">
-          <div className="receipt-header text-center border-b-dashed border-b-2 border-border pb-spacing-md mb-spacing-md">
-            <h2 className="text-xl font-bold mb-spacing-sm">RetroPos</h2>
+    <div id="receipt-modal" className={`modal ${isOpen ? 'active' : ''}`}>
+      <div className="modal-content receipt-content">
+        <div className="receipt">
+          <div className="receipt-header">
+            <h2>RetroPos</h2>
             <p>Thank you for your purchase!</p>
           </div>
-          <div className="receipt-info text-sm text-text-secondary mb-spacing-md">
+          <div className="receipt-info">
             <div>Transaction: {sale.id}</div>
             <div>Date: {formatDate(sale.date)}</div>
             <div>Time: {formatTime(sale.date)}</div>
             <div>Payment: {sale.paymentMethod.toUpperCase()}</div>
           </div>
-          <div className="receipt-items mb-spacing-md">
+          <div className="receipt-items">
             {sale.items.map((item) => (
-              <div key={item.barcode} className="flex justify-between py-spacing-sm border-b border-bg-primary">
+              <div key={item.barcode} className="receipt-item">
                 <div>
                   <div>{item.name}</div>
                   <div className="text-sm text-text-secondary">
@@ -51,35 +50,35 @@ export default function ReceiptModal({
               </div>
             ))}
           </div>
-          <div className="receipt-totals border-t-dashed border-t-2 border-border pt-spacing-md">
-            <div className="flex justify-between py-spacing-xs">
+          <div className="receipt-totals">
+            <div className="receipt-total-row">
               <span>Subtotal:</span>
               <span>{formatCurrency(sale.subtotal)}</span>
             </div>
-            <div className="flex justify-between py-spacing-xs">
+            <div className="receipt-total-row">
               <span>Tax (8%):</span>
               <span>{formatCurrency(sale.tax)}</span>
             </div>
-            <div className="flex justify-between pt-spacing-sm mt-spacing-sm border-t-2 border-border text-lg font-bold">
+            <div className="receipt-total-row final">
               <span>TOTAL:</span>
               <span>{formatCurrency(sale.total)}</span>
             </div>
           </div>
-          <div className="receipt-footer text-center mt-spacing-lg pt-spacing-md border-t-dashed border-t-2 border-border text-sm text-text-secondary">
+          <div className="receipt-footer">
             <p>Visit us again soon!</p>
             <p>RetroPos - Your Modern Shopping Experience</p>
           </div>
         </div>
-        <div className="receipt-actions flex space-x-spacing-md">
-          <Button variant="secondary" onClick={handlePrint} Icon={Printer} className="flex-1">
+        <div className="receipt-actions">
+          <Button variant="secondary" onClick={handlePrint} Icon={Printer}>
             Print
           </Button>
-          <Button variant="primary" onClick={onClose} Icon={Check} className="flex-1">
+          <Button variant="primary" onClick={onClose} Icon={Check}>
             Done
           </Button>
         </div>
       </div>
-    </Modal>
+    </div>
   );
 }
 

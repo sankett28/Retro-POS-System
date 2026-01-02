@@ -1,7 +1,7 @@
 'use client';
 
 import { ShoppingBag, LayoutDashboard, ShoppingCart, Package, Warehouse, BarChart3 } from 'lucide-react';
-import { ViewType } from '@/types';
+import { ViewType } from '@/app/page';
 import Button from '@/components/ui/Button';
 import React, { useEffect } from 'react';
 

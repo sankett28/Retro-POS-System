@@ -25,20 +25,14 @@ export default function CartItemComponent({
       </div>
       <div className="cart-item-actions">
         <div className="quantity-control">
-          <button onClick={() => onUpdateQuantity(item.barcode, -1)}>
-            <Minus size={16} />
-          </button>
+          <Button variant="icon" onClick={() => onUpdateQuantity(item.barcode, -1)} Icon={Minus} />
           <span>{item.quantity}</span>
-          <button onClick={() => onUpdateQuantity(item.barcode, 1)}>
-            <Plus size={16} />
-          </button>
+          <Button variant="icon" onClick={() => onUpdateQuantity(item.barcode, 1)} Icon={Plus} />
         </div>
         <div className="cart-item-price">
           {formatCurrency(item.price * item.quantity)}
         </div>
-        <button className="remove-item" onClick={() => onRemove(item.barcode)}>
-          <X size={16} />
-        </button>
+        <Button variant="delete" onClick={() => onRemove(item.barcode)} Icon={X} />
       </div>
     </div>
   );

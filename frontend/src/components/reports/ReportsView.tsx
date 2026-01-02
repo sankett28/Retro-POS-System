@@ -2,9 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { DollarSign, ShoppingBag, TrendingUp, Package, RefreshCw, Eye } from 'lucide-react';
-import StatCard from '@/components/dashboard/StatCard';
-import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
 import { useSales } from '@/hooks/useSales';
 import { formatCurrency, formatDate, formatTime } from '@/lib/utils/formatters';
 import ReceiptModal from '@/components/modals/ReceiptModal';
@@ -28,8 +25,8 @@ export default function ReportsView() {
     <div className="view active">
       <div className="view-header">
         <h2>Sales Reports</h2>
-        <div className="date-filter flex items-center space-x-4">
-          <Input
+        <div className="date-filter">
+          <input
             type="date"
             id="report-start-date"
             value={startDate}
@@ -37,7 +34,7 @@ export default function ReportsView() {
             className="date-input"
           />
           <span>to</span>
-          <Input
+          <input
             type="date"
             id="report-end-date"
             value={endDate}
@@ -51,30 +48,42 @@ export default function ReportsView() {
       </div>
 
       <div className="dashboard-grid mb-8">
-        <StatCard
-          icon={DollarSign}
-          value={formatCurrency(reportStats.revenue)}
-          label="Total Sales"
-          variant="yellow"
-        />
-        <StatCard
-          icon={ShoppingBag}
-          value={reportStats.transactions}
-          label="Transactions"
-          variant="blue"
-        />
-        <StatCard
-          icon={TrendingUp}
-          value={formatCurrency(reportStats.avgSale)}
-          label="Avg Transaction"
-          variant="green"
-        />
-        <StatCard
-          icon={Package}
-          value={reportStats.transactions}
-          label="Transactions"
-          variant="orange"
-        />
+        <div className="stat-card yellow">
+          <div className="stat-icon yellow">
+            <DollarSign size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{formatCurrency(reportStats.revenue)}</h3>
+            <p>Total Sales</p>
+          </div>
+        </div>
+        <div className="stat-card blue">
+          <div className="stat-icon blue">
+            <ShoppingBag size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{reportStats.transactions}</h3>
+            <p>Transactions</p>
+          </div>
+        </div>
+        <div className="stat-card green">
+          <div className="stat-icon green">
+            <TrendingUp size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{formatCurrency(reportStats.avgSale)}</h3>
+            <p>Avg Transaction</p>
+          </div>
+        </div>
+        <div className="stat-card orange">
+          <div className="stat-icon orange">
+            <Package size={32} />
+          </div>
+          <div className="stat-content">
+            <h3>{reportStats.itemsSold}</h3>
+            <p>Items Sold</p>
+          </div>
+        </div>
       </div>
 
       <div className="card">

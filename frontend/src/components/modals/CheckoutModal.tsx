@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import Modal from '@/components/ui/Modal';
 import Button from '@/components/ui/Button';
-import { Banknote, CreditCard, Smartphone } from 'lucide-react';
+import { Banknote, CreditCard, Smartphone, X } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils/formatters';
 import { PaymentMethod } from '@/types';
 
@@ -21,25 +20,25 @@ export default function CheckoutModal({
   onCompletePayment,
 }: CheckoutModalProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Process Payment" maxWidth="max-w-lg">
-      <div className="checkout-summary text-center">
-        <div className="checkout-total">
-          <span className="block text-base font-semibold mb-spacing-sm">Total Amount:</span>
-          <span id="checkout-total" className="block text-4xl font-bold">{formatCurrency(total)}</span>
+    <div id="checkout-modal" className={`modal ${isOpen ? 'active' : ''}`}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>Process Payment</h2>
+          <Button variant="icon" onClick={onClose} Icon={X} />
         </div>
-        <div className="payment-methods grid grid-cols-1 md:grid-cols-3 gap-spacing-md">
-          <Button variant="payment" onClick={() => onCompletePayment('cash')} Icon={Banknote} iconSize={48}>
-            Cash
-          </Button>
-          <Button variant="payment" onClick={() => onCompletePayment('card')} Icon={CreditCard} iconSize={48}>
-            Card
-          </Button>
-          <Button variant="payment" onClick={() => onCompletePayment('digital')} Icon={Smartphone} iconSize={48}>
-            Digital
-          </Button>
+        <div className="checkout-summary">
+          <div className="checkout-total">
+            <span>Total Amount:</span>
+            <span id="checkout-total">{formatCurrency(total)}</span>
+          </div>
+          <div className="payment-methods">
+            <Button variant="payment" onClick={() => onCompletePayment('cash')} Icon={Banknote} />
+            <Button variant="payment" onClick={() => onCompletePayment('card')} Icon={CreditCard} />
+            <Button variant="payment" onClick={() => onCompletePayment('digital')} Icon={Smartphone} />
+          </div>
         </div>
       </div>
-    </Modal>
+    </div>
   );
 }
 

@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from 'react';
 import { Package } from 'lucide-react';
 import { useProducts } from '@/hooks/useProducts';
 import { useCart } from '@/hooks/useCart';
-import Input from '@/components/ui/Input';
 import { formatCurrency } from '@/lib/utils/formatters';
 
 export default function ProductGrid() {

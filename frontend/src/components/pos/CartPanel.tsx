@@ -74,9 +74,9 @@ export default function CartPanel() {
       <div className="cart-panel">
         <div className="panel-header">
           <h2>Current Sale</h2>
-          <button className="btn-secondary btn-sm" onClick={clearCart}>
-            <Trash2 size={16} /> Clear
-          </button>
+          <Button variant="secondary" size="sm" onClick={clearCart} Icon={Trash2}>
+            Clear
+          </Button>
         </div>
 
         <div className="barcode-scanner">
@@ -89,9 +89,9 @@ export default function CartPanel() {
             onKeyPress={handleBarcodeInput}
             ref={barcodeRef}
           />
-          <button className="btn-primary" onClick={handleScanBarcode}>
-            <Scan size={16} /> Scan
-          </button>
+          <Button variant="primary" onClick={handleScanBarcode} Icon={Scan}>
+            Scan
+          </Button>
         </div>
 
         <div className="cart-items" id="cart-items">
@@ -128,9 +128,9 @@ export default function CartPanel() {
           </div>
         </div>
 
-        <button className="btn-checkout" onClick={handleProcessCheckout}>
-          <CreditCard size={20} /> Process Payment
-        </button>
+        <Button variant="checkout" onClick={handleProcessCheckout} Icon={CreditCard}>
+          Process Payment
+        </Button>
       </div>
 
       <CheckoutModal
