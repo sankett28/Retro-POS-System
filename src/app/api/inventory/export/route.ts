@@ -1,41 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-import { Product } from '@/types';
-
-const PRODUCTS_DATA_FILE = path.join(process.cwd(), 'data', 'products.json');
-
-async function getProductsData(): Promise<Product[]> {
-  try {
-    const data = await fs.readFile(PRODUCTS_DATA_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch {
-    return [];
-  }
-}
+import { supabase } from '@/lib/supabase/client';
 
 export async function GET() {
-  const products = await getProductsData();
+  try {
+    const { data: products, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('name');
 
-  const csvHeader = ['Barcode', 'Name', 'Category', 'Price', 'Cost', 'Stock', 'Value'];
-  const csvRows = products.map(p => [
-    p.barcode,
-    p.name,
-    p.category,
-    p.price.toFixed(2),
-    (p.cost || 0).toFixed(2),
-    p.stock,
-    (p.price * p.stock).toFixed(2)
-  ].join(','));
+    if (error) {
+      console.error('Error fetching products:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch products' },
+        { status: 500 }
+      );
+    }
 
-  const csv = [csvHeader.join(','), ...csvRows].join('\n');
+    const csvHeader = ['Barcode', 'Name', 'Category', 'Price', 'Cost', 'Stock', 'Value'];
+    const csvRows = (products || []).map(p => [
+      p.barcode,
+      p.name,
+      p.category,
+      parseFloat(p.price).toFixed(2),
+      (parseFloat(p.cost) || 0).toFixed(2),
+      p.stock,
+      (parseFloat(p.price) * p.stock).toFixed(2)
+    ].join(','));
 
-  return new NextResponse(csv, {
-    status: 200,
-    headers: {
-      'Content-Type': 'text/csv',
-      'Content-Disposition': `attachment; filename="inventory_${new Date().toISOString().split('T')[0]}.csv"`,
-    },
-  });
+    const csv = [csvHeader.join(','), ...csvRows].join('\n');
+
+    return new NextResponse(csv, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': `attachment; filename="inventory_${new Date().toISOString().split('T')[0]}.csv"`,
+      },
+    });
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }
 

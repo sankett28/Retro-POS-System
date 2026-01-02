@@ -17,7 +17,7 @@ export default function Modal({
   onClose,
   title,
   children,
-  maxWidth = 'max-w-md',
+  maxWidth,
 }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -42,11 +42,9 @@ export default function Modal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
-
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 z-[1000] flex items-center justify-center animate-fade-in"
+      className={`modal ${isOpen ? 'active' : ''}`}
       onClick={(e) => {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
           onClose();
@@ -55,11 +53,19 @@ export default function Modal({
     >
       <div
         ref={modalRef}
-        className={`bg-bg-card border-border border-border-width rounded-lg p-spacing-xl w-[90%] ${maxWidth} max-h-[90vh] overflow-y-auto shadow-xl animate-slide-up`}
+        className="modal-content"
+        style={maxWidth ? { maxWidth } : undefined}
       >
-        <div className="flex justify-between items-center mb-spacing-lg pb-spacing-md border-b-2 border-bg-primary">
-          <h2 className="text-lg font-bold">{title}</h2>
-          <Button variant="icon" onClick={onClose} Icon={X} iconSize={20} />
+        <div className="modal-header">
+          <h2>{title}</h2>
+          <button
+            className="btn-icon"
+            onClick={onClose}
+            type="button"
+            aria-label="Close modal"
+          >
+            <X size={20} />
+          </button>
         </div>
         {children}
       </div>

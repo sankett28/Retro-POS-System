@@ -84,32 +84,37 @@ export default function ProductForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
-      <Input
-        label="Barcode"
-        id="barcode"
-        type="text"
-        value={product.barcode}
-        onChange={handleChange}
-        required
-        readOnly={!!initialData} // Barcode is read-only when editing
-      />
-      <Input
-        label="Product Name"
-        id="name"
-        type="text"
-        value={product.name}
-        onChange={handleChange}
-        required
-      />
+    <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="category" className="block mb-2 font-semibold">Category</label>
+        <label htmlFor="barcode">Barcode</label>
+        <input
+          id="barcode"
+          type="text"
+          value={product.barcode}
+          onChange={handleChange}
+          required
+          readOnly={!!initialData}
+        />
+        {errors.barcode && <p className="text-red-500 text-sm mt-1">{errors.barcode}</p>}
+      </div>
+      <div className="form-group">
+        <label htmlFor="name">Product Name</label>
+        <input
+          id="name"
+          type="text"
+          value={product.name}
+          onChange={handleChange}
+          required
+        />
+        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+      </div>
+      <div className="form-group">
+        <label htmlFor="category">Category</label>
         <select
           id="category"
           value={product.category}
           onChange={handleChange}
           required
-          className="w-full px-4 py-2 border-border border-border-width rounded-md text-base bg-white font-medium focus:outline-none focus:border-primary focus:shadow-primary-glow"
         >
           <option value="">Select Category</option>
           <option value="Electronics">Electronics</option>
@@ -123,37 +128,45 @@ export default function ProductForm({
         </select>
         {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
       </div>
-      <div className="form-row grid grid-cols-2 gap-4">
-        <Input
-          label="Price ($)"
-          id="price"
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="price">Price ($)</label>
+          <input
+            id="price"
+            type="number"
+            step="0.01"
+            min="0"
+            value={product.price}
+            onChange={handleChange}
+            required
+          />
+          {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
+        </div>
+        <div className="form-group">
+          <label htmlFor="cost">Cost ($)</label>
+          <input
+            id="cost"
+            type="number"
+            step="0.01"
+            min="0"
+            value={product.cost}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="form-group">
+        <label htmlFor="stock">Stock Quantity</label>
+        <input
+          id="stock"
           type="number"
-          step="0.01"
           min="0"
-          value={product.price}
+          value={product.stock}
           onChange={handleChange}
           required
         />
-        <Input
-          label="Cost ($)"
-          id="cost"
-          type="number"
-          step="0.01"
-          min="0"
-          value={product.cost}
-          onChange={handleChange}
-        />
+        {errors.stock && <p className="text-red-500 text-sm mt-1">{errors.stock}</p>}
       </div>
-      <Input
-        label="Stock Quantity"
-        id="stock"
-        type="number"
-        min="0"
-        value={product.stock}
-        onChange={handleChange}
-        required
-      />
-      <div className="form-actions flex justify-end space-x-4 mt-8">
+      <div className="form-actions">
         <Button type="button" variant="secondary" onClick={onCancel}>
           Cancel
         </Button>
