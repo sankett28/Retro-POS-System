@@ -27,6 +27,7 @@ from database import (
     create_sale,
     update_product_stock,
 )
+from db.supabase import get_dashboard_stats as db_get_dashboard_stats
 
 # Load environment variables
 load_dotenv()
@@ -291,11 +292,16 @@ async def export_inventory():
 async def get_dashboard():
     """Get dashboard statistics."""
     try:
-        products = get_all_products()
-        sales = get_all_sales()
-        
-        stats = calculate_dashboard_stats(products, sales)
-        return stats
+        # Try to use database function first
+        try:
+            stats_dict = db_get_dashboard_stats()
+            return DashboardStats(**stats_dict)
+        except Exception:
+            # Fallback to manual calculation
+            products = get_all_products()
+            sales = get_all_sales()
+            stats = calculate_dashboard_stats(products, sales)
+            return stats
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch dashboard stats: {str(e)}")
 

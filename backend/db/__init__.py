@@ -1,0 +1,4 @@
+"""
+Database package for Supabase operations.
+"""
+

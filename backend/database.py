@@ -1,113 +1,163 @@
+"""
+Database operations layer.
+
+This module provides business logic and data transformation between
+API models and database operations. It uses backend/db/supabase.py
+for actual database access.
+"""
 from typing import List, Optional, Dict, Any
 from datetime import datetime
-from supabase import create_client, Client
-from dotenv import load_dotenv
-import os
 from models import Product, Sale, CartItem
+from db.supabase import (
+    get_products as db_get_products,
+    get_product_by_barcode as db_get_product_by_barcode,
+    create_product as db_create_product,
+    update_product as db_update_product,
+    delete_product as db_delete_product,
+    update_product_stock as db_update_product_stock_direct,
+    get_all_sales as db_get_all_sales,
+    get_sale_by_id as db_get_sale_by_id,
+    create_sale as db_create_sale,
+    decrement_inventory as db_decrement_inventory,
+    get_dashboard_stats as db_get_dashboard_stats,
+)
 
-# Load environment variables
-load_dotenv()
-
-# Supabase configuration
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-
-if not SUPABASE_URL or not SUPABASE_KEY:
-    raise ValueError("Supabase URL and Key must be set in environment variables")
-
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-# Helper to convert Supabase rows to Pydantic models
+# Helper to convert database rows to Pydantic models
 def _row_to_product(row: Dict[str, Any]) -> Product:
-    return Product(**row)
+    """Convert database row to Product model."""
+    return Product(
+        barcode=row["barcode"],
+        name=row["name"],
+        category=row["category"],
+        price=float(row["price"]),
+        cost=float(row.get("cost", 0)),
+        stock=int(row.get("stock", 0))
+    )
 
 def _row_to_sale(row: Dict[str, Any]) -> Sale:
+    """Convert database row to Sale model with items."""
     # Ensure items are converted to CartItem models
-    row['items'] = [CartItem(**item) for item in row['items']]
-    return Sale(**row)
+    items = []
+    for item in row.get("items", []):
+        items.append(CartItem(
+            barcode=item["barcode"],
+            name=item.get("name", ""),
+            category=item.get("category", ""),
+            price=float(item["price"]),
+            cost=float(item.get("cost", 0)),
+            stock=int(item.get("stock", 0)),  # Current stock, not historical
+            quantity=int(item["quantity"])
+        ))
+    
+    return Sale(
+        id=row["id"],
+        date=row["date"],
+        items=items,
+        subtotal=float(row["subtotal"]),
+        tax=float(row["tax"]),
+        total=float(row["total"]),
+        paymentMethod=row["payment_method"]
+    )
 
-# Product operations
+# ==================== PRODUCT OPERATIONS ====================
+
 def get_all_products() -> List[Product]:
-    """Get all products from Supabase."""
-    response = supabase.from_("products").select("*").execute()
-    if response.data:
-        return [_row_to_product(row) for row in response.data]
-    return []
+    """Get all products."""
+    rows = db_get_products()
+    return [_row_to_product(row) for row in rows]
 
 def get_product_by_barcode(barcode: str) -> Optional[Product]:
-    """Get a product by barcode from Supabase."""
-    response = supabase.from_("products").select("*").eq("barcode", barcode).single().execute()
-    if response.data:
-        return _row_to_product(response.data)
+    """Get a product by barcode."""
+    row = db_get_product_by_barcode(barcode)
+    if row:
+        return _row_to_product(row)
     return None
 
 def create_product(product: Product) -> Product:
-    """Create a new product in Supabase."""
-    response = supabase.from_("products").insert(product.model_dump()).execute()
-    if response.data:
-        return _row_to_product(response.data[0])
-    raise ValueError("Failed to create product")
+    """Create a new product."""
+    product_data = {
+        "barcode": product.barcode,
+        "name": product.name,
+        "category": product.category,
+        "price": product.price,
+        "cost": product.cost,
+        "stock": product.stock
+    }
+    row = db_create_product(product_data)
+    return _row_to_product(row)
 
 def update_product(updated_product: Product) -> Product:
-    """Update an existing product in Supabase."""
-    response = supabase.from_("products").update(updated_product.model_dump()).eq("barcode", updated_product.barcode).execute()
-    if response.data:
-        return _row_to_product(response.data[0])
-    raise ValueError("Failed to update product or product not found")
+    """Update an existing product."""
+    product_data = {
+        "name": updated_product.name,
+        "category": updated_product.category,
+        "price": updated_product.price,
+        "cost": updated_product.cost,
+        "stock": updated_product.stock
+    }
+    row = db_update_product(updated_product.barcode, product_data)
+    return _row_to_product(row)
 
 def delete_product(barcode: str) -> bool:
-    """Delete a product by barcode from Supabase."""
-    response = supabase.from_("products").delete().eq("barcode", barcode).execute()
-    if response.data:
-        return True
-    raise ValueError("Failed to delete product or product not found")
+    """Delete a product by barcode."""
+    return db_delete_product(barcode)
 
 def update_product_stock(barcode: str, new_stock: int) -> Product:
-    """Update product stock level in Supabase."""
-    response = supabase.from_("products").update({"stock": max(0, new_stock)}).eq("barcode", barcode).execute()
-    if response.data:
-        return _row_to_product(response.data[0])
-    raise ValueError("Failed to update stock or product not found")
+    """Update product stock level (allows negative values)."""
+    row = db_update_product_stock_direct(barcode, new_stock)
+    return _row_to_product(row)
 
-# Sale operations
+# ==================== SALE OPERATIONS ====================
+
 def get_all_sales(start_date: Optional[str] = None, end_date: Optional[str] = None) -> List[Sale]:
-    """Get all sales from Supabase, optionally filtered by date range."""
-    query = supabase.from_("sales").select("*")
-    if start_date:
-        query = query.gte("date", start_date)
-    if end_date:
-        query = query.lte("date", end_date)
-    response = query.execute()
-    if response.data:
-        return [_row_to_sale(row) for row in response.data]
-    return []
+    """Get all sales, optionally filtered by date range."""
+    rows = db_get_all_sales(start_date=start_date, end_date=end_date)
+    return [_row_to_sale(row) for row in rows]
 
 def get_sale_by_id(sale_id: str) -> Optional[Sale]:
-    """Get a sale by ID from Supabase."""
-    response = supabase.from_("sales").select("*").eq("id", sale_id).single().execute()
-    if response.data:
-        return _row_to_sale(response.data)
+    """Get a sale by ID."""
+    row = db_get_sale_by_id(sale_id)
+    if row:
+        return _row_to_sale(row)
     return None
 
 def create_sale(sale: Sale) -> Sale:
-    """Create a new sale in Supabase and update product stock levels."""
-    # First, create the sale
-    response = supabase.from_("sales").insert(sale.model_dump()).execute()
-    if not response.data:
-        raise ValueError("Failed to create sale")
+    """
+    Create a new sale and update product stock levels.
+    Uses normalized schema: sales + sale_items tables.
+    """
+    # Prepare sale data (without items, as they go in sale_items table)
+    sale_data = {
+        "id": sale.id,
+        "date": sale.date,
+        "subtotal": sale.subtotal,
+        "tax": sale.tax,
+        "total": sale.total,
+        "payment_method": sale.paymentMethod,
+        "customer_id": None  # Will be added in Phase 2
+    }
     
-    new_sale = _row_to_sale(response.data[0])
-
-    # Then, update product stock levels for each item in the sale
+    # Prepare sale items data
+    sale_items = []
+    for item in sale.items:
+        sale_items.append({
+            "sale_id": sale.id,
+            "barcode": item.barcode,
+            "quantity": item.quantity,
+            "price": item.price,
+            "cost": item.cost
+        })
+    
+    # Create sale and items in database
+    row = db_create_sale(sale_data, sale_items)
+    
+    # Update product stock levels for each item
     for item in sale.items:
         try:
-            # Fetch the current product to get its stock
-            product = get_product_by_barcode(item.barcode)
-            if product:
-                new_stock = max(0, product.stock - item.quantity)
-                update_product_stock(item.barcode, new_stock)
+            # Decrement inventory (allows negative values)
+            db_decrement_inventory(item.barcode, item.quantity)
         except Exception as e:
             print(f"Error updating stock for product {item.barcode}: {e}")
             # Continue with other products even if one fails
     
-    return new_sale
+    return _row_to_sale(row)
