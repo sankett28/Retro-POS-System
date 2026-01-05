@@ -1,8 +1,7 @@
 'use client';
 
-import { ShoppingBag, LayoutDashboard, ShoppingCart, Package, Warehouse, BarChart3 } from 'lucide-react';
+import { Store, LayoutDashboard, Receipt, Package, Warehouse, TrendingUp, Bell, UserCircle } from 'lucide-react';
 import { ViewType } from '@/types';
-import Button from '@/components/ui/Button';
 import React, { useEffect } from 'react';
 
 interface HeaderProps {
@@ -41,52 +40,52 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
     };
   }, [setActiveView]);
 
+  const navLinks = [
+    { id: 'dashboard' as ViewType, icon: LayoutDashboard, label: 'Dashboard' },
+    { id: 'inventory' as ViewType, icon: Package, label: 'Inventory' },
+    { id: 'pos' as ViewType, icon: Receipt, label: 'Billing' },
+    { id: 'products' as ViewType, icon: Package, label: 'Products' },
+    { id: 'reports' as ViewType, icon: TrendingUp, label: 'Analytics' },
+  ];
+
   return (
-    <header className="header">
-      <div className="header-content">
-        <div className="logo">
-          <ShoppingBag size={36} strokeWidth={2.5} />
-          <h1>RetroPos</h1>
+    <nav className="navbar">
+      <div className="nav-container">
+        <div className="nav-brand">
+          <Store className="brand-icon" size={28} />
+          <span className="brand-name">Retail Boss</span>
+          <span className="beta-badge">AI-Powered</span>
         </div>
-        <div className="header-actions">
-          <button
-            className={`btn-icon ${activeView === 'dashboard' ? 'active' : ''}`}
-            onClick={() => setActiveView('dashboard')}
-            title="Dashboard"
-          >
-            <LayoutDashboard size={20} />
+        <div className="nav-menu">
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                className={`nav-link ${activeView === link.id ? 'active' : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveView(link.id);
+                }}
+              >
+                <Icon size={18} />
+                {link.label}
+              </a>
+            );
+          })}
+        </div>
+        <div className="nav-actions">
+          <button className="btn-icon" title="Notifications">
+            <Bell size={18} />
+            <span className="notification-badge">3</span>
           </button>
-          <button
-            className={`btn-icon ${activeView === 'pos' ? 'active' : ''}`}
-            onClick={() => setActiveView('pos')}
-            title="Point of Sale"
-          >
-            <ShoppingCart size={20} />
-          </button>
-          <button
-            className={`btn-icon ${activeView === 'products' ? 'active' : ''}`}
-            onClick={() => setActiveView('products')}
-            title="Products"
-          >
-            <Package size={20} />
-          </button>
-          <button
-            className={`btn-icon ${activeView === 'inventory' ? 'active' : ''}`}
-            onClick={() => setActiveView('inventory')}
-            title="Inventory"
-          >
-            <Warehouse size={20} />
-          </button>
-          <button
-            className={`btn-icon ${activeView === 'reports' ? 'active' : ''}`}
-            onClick={() => setActiveView('reports')}
-            title="Reports"
-          >
-            <BarChart3 size={20} />
+          <button className="btn-icon" title="Profile">
+            <UserCircle size={18} />
           </button>
         </div>
       </div>
-    </header>
+    </nav>
   );
 }
 

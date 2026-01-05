@@ -11,13 +11,13 @@ export default function Badge({
   children,
   className = '',
 }: BadgeProps) {
-  const baseStyle = "inline-block px-3 py-1 text-sm font-semibold rounded-md border-2 border-border";
+  const baseStyle = "inline-block px-3 py-1 text-xs font-semibold rounded-full";
   
   const variants = {
-    success: "bg-secondary text-white",
-    warning: "bg-accent-orange text-white",
-    danger: "bg-[#FF4444] text-white",
-    info: "bg-accent text-white",
+    success: "bg-[#dcfce7] text-[#16a34a]",
+    warning: "bg-[#fef3c7] text-[#d97706]",
+    danger: "bg-[#fee2e2] text-[#dc2626]",
+    info: "bg-[#dbeafe] text-[#2563eb]",
   };
 
   return (
