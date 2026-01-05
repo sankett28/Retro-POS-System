@@ -1,146 +1,124 @@
-# Supabase Integration Complete ✅
+# Supabase Configuration Guide
 
-Your Retro POS System has been successfully configured to use Supabase as the backend database!
+## Current Status
 
-## What Was Done
+**Note:** The current implementation uses **FastAPI backend with JSON files** for data storage. Supabase is **not required** for the current setup.
 
-### 1. ✅ Database Migrations Created
-- Created `migrations/` folder with 4 SQL migration files:
-  - `001_create_products_table.sql` - Products table with indexes and triggers
-  - `002_create_sales_table.sql` - Sales/transactions table
-  - `003_create_sale_items_table.sql` - Junction table for sale items
-  - `004_create_views_and_functions.sql` - Views and helper functions
+However, if you want to use Supabase (either for future migration or if you're keeping the Supabase client code), follow the instructions below.
 
-### 2. ✅ Supabase Client Setup
-- Installed `@supabase/supabase-js` package
-- Created `src/lib/supabase/client.ts` for database connection
+## Where to Put Supabase Credentials
 
-### 3. ✅ API Routes Updated
-All API routes have been migrated from file-based storage to Supabase:
-- ✅ `/api/products` - Products CRUD operations
-- ✅ `/api/products/[barcode]` - Get/Delete product by barcode
-- ✅ `/api/sales` - Create and retrieve sales
-- ✅ `/api/sales/[id]` - Get sale by ID
-- ✅ `/api/inventory` - Inventory stats and stock adjustments
-- ✅ `/api/inventory/export` - CSV export functionality
-- ✅ `/api/dashboard` - Dashboard statistics
+### Frontend (Next.js)
 
-## Next Steps
+Create a `.env.local` file in the `frontend/` directory:
 
-### Step 1: Set Up Supabase Project
+```bash
+cd frontend
+```
+
+Create `.env.local` with:
+
+```env
+# Backend API URL (FastAPI - Required)
+NEXT_PUBLIC_API_URL=http://localhost:8000
+
+# Supabase Configuration (Optional - only if using Supabase)
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+### Quick Setup
+
+1. **Copy the example file:**
+   ```bash
+   cd frontend
+   copy .env.local.example .env.local  # Windows
+   # or
+   cp .env.local.example .env.local     # Mac/Linux
+   ```
+
+2. **Edit `.env.local` and add your Supabase credentials:**
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+   ```
+
+## How to Get Your Supabase Credentials
 
 1. Go to [Supabase Dashboard](https://app.supabase.com)
-2. Create a new project (or use existing)
-3. Wait for the project to be fully provisioned
+2. Select your project (or create a new one)
+3. Go to **Settings** → **API**
+4. Copy the following:
+   - **Project URL** → `NEXT_PUBLIC_SUPABASE_URL`
+   - **anon/public key** → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-### Step 2: Run Database Migrations
+## Important Notes
 
-1. In Supabase Dashboard, go to **SQL Editor**
-2. Run each migration file **in order**:
-   - Copy contents of `migrations/001_create_products_table.sql` → Run
-   - Copy contents of `migrations/002_create_sales_table.sql` → Run
-   - Copy contents of `migrations/003_create_sale_items_table.sql` → Run
-   - Copy contents of `migrations/004_create_views_and_functions.sql` → Run
+### Current Implementation (FastAPI + JSON)
 
-**Important:** Run them in this exact order!
+- ✅ **Backend uses JSON files** (`data/products.json`, `data/sales.json`)
+- ✅ **No Supabase required** for current functionality
+- ✅ The Supabase client code exists but is **not actively used** by the API routes
 
-### Step 3: Configure Environment Variables
+### If You Want to Use Supabase
 
-1. Create a `.env.local` file in the project root
-2. Get your Supabase credentials:
-   - Go to **Settings** → **API** in your Supabase project
-   - Copy **Project URL** and **anon/public key**
-3. Add to `.env.local`:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_project_url_here
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-   ```
+If you plan to migrate back to Supabase or use it alongside the FastAPI backend:
 
-### Step 4: Test the Connection
+1. **Set up Supabase database:**
+   - Run the migration files in `migrations/` folder
+   - See `migrations/README.md` for instructions
 
-1. Start your development server:
-   ```bash
-   npm run dev
-   ```
-2. The app should now connect to Supabase instead of JSON files
-3. Test creating a product, making a sale, etc.
+2. **Add credentials to `.env.local`:**
+   - Follow the steps above
 
-## Database Schema
+3. **Update backend to use Supabase:**
+   - You would need to modify `backend/database.py` to use Supabase instead of JSON files
+   - Or create a hybrid approach
 
-### Tables
+## File Locations
 
-**products**
-- `barcode` (TEXT, PRIMARY KEY)
-- `name` (TEXT)
-- `category` (TEXT)
-- `price` (DECIMAL)
-- `cost` (DECIMAL)
-- `stock` (INTEGER)
-- `created_at` (TIMESTAMP)
-- `updated_at` (TIMESTAMP)
+```
+frontend/
+├── .env.local          # ← Create this file (not committed to git)
+├── .env.local.example  # ← Template file (committed to git)
+└── src/
+    └── lib/
+        └── supabase/
+            └── client.ts  # ← Supabase client (currently not used)
+```
 
-**sales**
-- `id` (TEXT, PRIMARY KEY)
-- `date` (TIMESTAMP)
-- `subtotal` (DECIMAL)
-- `tax` (DECIMAL)
-- `total` (DECIMAL)
-- `payment_method` (TEXT: 'cash' | 'card' | 'digital')
-- `created_at` (TIMESTAMP)
+## Environment Variable Priority
 
-**sale_items**
-- `id` (SERIAL, PRIMARY KEY)
-- `sale_id` (TEXT, FOREIGN KEY → sales.id)
-- `barcode` (TEXT, FOREIGN KEY → products.barcode)
-- `quantity` (INTEGER)
-- `price` (DECIMAL)
-- `cost` (DECIMAL)
-- `created_at` (TIMESTAMP)
+Next.js loads environment variables in this order:
+1. `.env.local` (highest priority, not committed to git)
+2. `.env.development` or `.env.production`
+3. `.env`
 
-### Views & Functions
+**Always use `.env.local` for sensitive credentials like Supabase keys.**
 
-- `low_stock_products` - Products with stock < 20
-- `sales_summary` - Sales with item counts
-- `get_dashboard_stats()` - Function to calculate dashboard statistics
+## Security Best Practices
 
-## Migration from JSON Files
-
-If you have existing data in `data/products.json` and `data/sales.json`, you'll need to:
-
-1. **Import Products:**
-   - Use Supabase Dashboard → Table Editor → Import data
-   - Or create a script to read JSON and insert into Supabase
-
-2. **Import Sales:**
-   - Sales will need to be inserted into both `sales` and `sale_items` tables
-   - This is more complex and may require a migration script
+- ✅ **Never commit `.env.local`** to git (it's in `.gitignore`)
+- ✅ **Use `.env.local.example`** as a template (this is committed)
+- ✅ **Use the anon/public key** for client-side code (not the service role key)
+- ✅ **Restrict Supabase RLS policies** if using Supabase
 
 ## Troubleshooting
 
-### "Missing Supabase environment variables"
-- Make sure `.env.local` exists and has correct values
-- Restart your dev server after adding env variables
+### "Missing Supabase environment variables" Error
 
-### "Failed to fetch products"
-- Check that migrations ran successfully
-- Verify RLS policies allow access (migrations set them to allow all)
+If you see this error but **don't want to use Supabase**:
+- The error comes from `frontend/src/lib/supabase/client.ts`
+- You can either:
+  1. Add dummy values to `.env.local` (not recommended)
+  2. Make the Supabase client optional (recommended - update the code)
+  3. Remove the Supabase client if not needed
 
-### "Product not found" errors
-- Make sure you've run all migrations
-- Check that products table exists in Supabase Dashboard
+### Frontend Can't Connect to Backend
 
-## Security Notes
+Make sure `NEXT_PUBLIC_API_URL` is set correctly:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
 
-⚠️ **Important:** The current RLS policies allow all operations. For production:
-- Implement proper authentication
-- Update RLS policies to restrict access based on user roles
-- Consider using service role key for server-side operations
-
-## Support
-
-If you encounter issues:
-1. Check Supabase Dashboard → Logs for database errors
-2. Check browser console for client-side errors
-3. Verify all migrations ran successfully
-4. Ensure environment variables are set correctly
-
+And that your FastAPI backend is running on port 8000.

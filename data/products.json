@@ -36,23 +36,23 @@
     "name": "Organic Honey",
     "category": "Food",
     "price": 8.99,
-    "cost": 5,
+    "cost": 5.0,
     "stock": 19
   },
   {
     "barcode": "1006",
-    "name": "Almond Milk",
+    "name": "Almonds",
     "category": "Beverages",
     "price": 4.99,
     "cost": 2.8,
-    "stock": 34
+    "stock": 33
   },
   {
     "barcode": "1007",
     "name": "Dark Chocolate Bar",
     "category": "Food",
     "price": 3.99,
-    "cost": 2,
+    "cost": 2.0,
     "stock": 49
   },
   {
@@ -77,7 +77,7 @@
     "category": "Beverages",
     "price": 2.99,
     "cost": 1.5,
-    "stock": 59
+    "stock": 58
   },
   {
     "barcode": "1011",
@@ -100,7 +100,7 @@
     "name": "Updated Test Product",
     "category": "Test",
     "price": 12.5,
-    "cost": 6,
+    "cost": 6.0,
     "stock": 100
   }
 ]

@@ -1,13 +1,35 @@
 # Environment Variables Setup
 
-Create a `.env.local` file in the root directory with the following variables:
+## Frontend (Next.js)
+
+Create a `.env.local` file in the **`frontend/`** directory:
 
 ```env
-# Supabase Configuration
+# Backend API URL (FastAPI - Required)
+NEXT_PUBLIC_API_URL=http://localhost:8000
+
+# Supabase Configuration (Optional - only if using Supabase)
 # Get these values from your Supabase project settings: https://app.supabase.com/project/_/settings/api
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
+
+**Location:** `frontend/.env.local`
+
+## Backend (FastAPI)
+
+Create a `.env` file in the **`backend/`** directory:
+
+```env
+HOST=0.0.0.0
+PORT=8000
+CORS_ORIGINS=http://localhost:3000
+API_TITLE=Retro POS System API
+API_VERSION=1.0.0
+ENVIRONMENT=development
+```
+
+**Location:** `backend/.env` (copy from `backend/env.example`)
 
 ## How to get your Supabase credentials:
 

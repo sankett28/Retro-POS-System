@@ -35,7 +35,7 @@
         "name": "Organic Honey",
         "category": "Food",
         "price": 8.99,
-        "cost": 5,
+        "cost": 5.0,
         "stock": 20,
         "quantity": 1
       }
@@ -54,7 +54,7 @@
         "name": "Dark Chocolate Bar",
         "category": "Food",
         "price": 3.99,
-        "cost": 2,
+        "cost": 2.0,
         "stock": 50,
         "quantity": 1
       },
@@ -126,6 +126,34 @@
     "subtotal": 44.730000000000004,
     "tax": 3.5784000000000002,
     "total": 48.308400000000006,
+    "paymentMethod": "digital"
+  },
+  {
+    "id": "TXN1767267298654",
+    "date": "2026-01-01T11:34:58.654Z",
+    "items": [
+      {
+        "barcode": "1006",
+        "name": "Almond Milk",
+        "category": "Beverages",
+        "price": 4.99,
+        "cost": 2.8,
+        "stock": 34,
+        "quantity": 1
+      },
+      {
+        "barcode": "1010",
+        "name": "Coconut Water",
+        "category": "Beverages",
+        "price": 2.99,
+        "cost": 1.5,
+        "stock": 59,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 7.98,
+    "tax": 0.6384000000000001,
+    "total": 8.618400000000001,
     "paymentMethod": "digital"
   }
 ]
