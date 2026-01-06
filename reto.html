@@ -1,0 +1,3146 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Helium AI">
+    <meta name="description" content="AI-Powered Retail Boss - Smart Management System for Indian Kirana Stores & Cafes">
+    <meta name="keywords" content="retail management, kirana store, cafe management, AI inventory, billing software, India">
+    <title>Retail Boss - AI-Powered Management for Kirana & Cafes</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i data-lucide="store" class="brand-icon"></i>
+                <span class="brand-name">Retail Boss</span>
+                <span class="beta-badge">AI-Powered</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active">
+                    <i data-lucide="layout-dashboard"></i>
+                    Dashboard
+                </a>
+                <a href="#inventory" class="nav-link">
+                    <i data-lucide="package"></i>
+                    Inventory
+                </a>
+                <a href="#billing" class="nav-link">
+                    <i data-lucide="receipt"></i>
+                    Billing
+                </a>
+                <a href="#voice" class="nav-link">
+                    <i data-lucide="mic"></i>
+                    Voice AI
+                </a>
+                <a href="#analytics" class="nav-link">
+                    <i data-lucide="trending-up"></i>
+                    Analytics
+                </a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-icon" id="notificationBtn">
+                    <i data-lucide="bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="btn-icon">
+                    <i data-lucide="user-circle"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="section-header">
+                <div>
+                    <h1 class="section-title">Dashboard Overview</h1>
+                    <p class="section-subtitle">Real-time insights for your business</p>
+                </div>
+                <div class="header-actions">
+                    <select class="select-input">
+                        <option>Today</option>
+                        <option>This Week</option>
+                        <option>This Month</option>
+                    </select>
+                    <button class="btn-primary">
+                        <i data-lucide="download"></i>
+                        Export Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: #000;">
+                            <i data-lucide="indian-rupee"></i>
+                        </div>
+                        <span class="kpi-trend positive">
+                            <i data-lucide="trending-up"></i>
+                            +12.5%
+                        </span>
+                    </div>
+                    <div class="kpi-value">₹45,280</div>
+                    <div class="kpi-label">Today's Sales</div>
+                    <div class="kpi-footer">vs ₹40,250 yesterday</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: #000;">
+                            <i data-lucide="package"></i>
+                        </div>
+                        <span class="kpi-trend warning">
+                            <i data-lucide="alert-triangle"></i>
+                            12 Low
+                        </span>
+                    </div>
+                    <div class="kpi-value">248</div>
+                    <div class="kpi-label">Total Products</div>
+                    <div class="kpi-footer">12 items need reorder</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: #000;">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <span class="kpi-trend positive">
+                            <i data-lucide="trending-up"></i>
+                            +8.2%
+                        </span>
+                    </div>
+                    <div class="kpi-value">1,247</div>
+                    <div class="kpi-label">Active Customers</div>
+                    <div class="kpi-footer">89 new this week</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon" style="background: #000;">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                        <span class="kpi-trend positive">
+                            <i data-lucide="trending-up"></i>
+                            +15.3%
+                        </span>
+                    </div>
+                    <div class="kpi-value">₹8.2L</div>
+                    <div class="kpi-label">Monthly Revenue</div>
+                    <div class="kpi-footer">Target: ₹10L</div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Sales Trend (Last 7 Days)</h3>
+                        <button class="btn-icon-sm">
+                            <i data-lucide="more-vertical"></i>
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Top Selling Categories</h3>
+                        <button class="btn-icon-sm">
+                            <i data-lucide="more-vertical"></i>
+                        </button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Insights -->
+            <div class="insights-section">
+                <h3 class="insights-title">
+                    <i data-lucide="sparkles"></i>
+                    AI-Powered Insights
+                </h3>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-icon" style="background: #000;">
+                            <i data-lucide="trending-up"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>High Demand Alert</h4>
+                            <p>Maggi noodles sales up 45% this week. Consider increasing stock by 30 units.</p>
+                        </div>
+                        <button class="btn-sm">Act Now</button>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-icon" style="background: #000;">
+                            <i data-lucide="alert-circle"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Low Stock Warning</h4>
+                            <p>12 products below minimum level. Estimated stockout in 2-3 days.</p>
+                        </div>
+                        <button class="btn-sm">View Items</button>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-icon" style="background: #000;">
+                            <i data-lucide="calendar"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Festival Forecast</h4>
+                            <p>Diwali in 15 days. AI predicts 60% increase in sweets & snacks demand.</p>
+                        </div>
+                        <button class="btn-sm">Prepare</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inventory Section -->
+        <section id="inventory" class="section">
+            <div class="section-header">
+                <div>
+                    <h1 class="section-title">Smart Inventory Management</h1>
+                    <p class="section-subtitle">AI-powered stock tracking & forecasting</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        <i data-lucide="scan"></i>
+                        Scan Barcode
+                    </button>
+                    <button class="btn-primary">
+                        <i data-lucide="plus"></i>
+                        Add Product
+                    </button>
+                </div>
+            </div>
+
+            <!-- Inventory Stats -->
+            <div class="inventory-stats">
+                <div class="stat-card">
+                    <i data-lucide="package-check"></i>
+                    <div>
+                        <div class="stat-value">236</div>
+                        <div class="stat-label">In Stock</div>
+                    </div>
+                </div>
+                <div class="stat-card alert">
+                    <i data-lucide="alert-triangle"></i>
+                    <div>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Low Stock</div>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <i data-lucide="package-x"></i>
+                    <div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Expiring Soon</div>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <i data-lucide="trending-up"></i>
+                    <div>
+                        <div class="stat-value">₹2.4L</div>
+                        <div class="stat-label">Stock Value</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Table -->
+            <div class="table-card">
+                <div class="table-header">
+                    <div class="search-box">
+                        <i data-lucide="search"></i>
+                        <input type="text" placeholder="Search products..." id="inventorySearch">
+                    </div>
+                    <div class="table-filters">
+                        <button class="filter-btn active">All</button>
+                        <button class="filter-btn">Low Stock</button>
+                        <button class="filter-btn">Expiring</button>
+                    </div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th>Min Level</th>
+                            <th>Status</th>
+                            <th>AI Forecast</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody">
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">M</div>
+                                    <div>
+                                        <div class="product-name">Maggi Noodles 2-Min</div>
+                                        <div class="product-sku">SKU: MAG001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Instant Food</td>
+                            <td><span class="stock-qty">45</span></td>
+                            <td>20</td>
+                            <td><span class="badge badge-success">Good Stock</span></td>
+                            <td>
+                                <div class="forecast">
+                                    <i data-lucide="trending-up"></i>
+                                    High demand
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-icon-sm">
+                                    <i data-lucide="edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">P</div>
+                                    <div>
+                                        <div class="product-name">Parle-G Biscuits</div>
+                                        <div class="product-sku">SKU: PAR002</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Biscuits</td>
+                            <td><span class="stock-qty warning">8</span></td>
+                            <td>15</td>
+                            <td><span class="badge badge-warning">Low Stock</span></td>
+                            <td>
+                                <div class="forecast">
+                                    <i data-lucide="alert-circle"></i>
+                                    Reorder now
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-icon-sm">
+                                    <i data-lucide="shopping-cart"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">T</div>
+                                    <div>
+                                        <div class="product-name">Tata Tea Gold</div>
+                                        <div class="product-sku">SKU: TEA003</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Beverages</td>
+                            <td><span class="stock-qty">32</span></td>
+                            <td>25</td>
+                            <td><span class="badge badge-success">Good Stock</span></td>
+                            <td>
+                                <div class="forecast">
+                                    <i data-lucide="minus"></i>
+                                    Stable
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-icon-sm">
+                                    <i data-lucide="edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-cell">
+                                    <div class="product-img">A</div>
+                                    <div>
+                                        <div class="product-name">Amul Butter 500g</div>
+                                        <div class="product-sku">SKU: AMU004</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dairy</td>
+                            <td><span class="stock-qty danger">3</span></td>
+                            <td>10</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>
+                                <div class="forecast">
+                                    <i data-lucide="alert-triangle"></i>
+                                    Urgent!
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-icon-sm">
+                                    <i data-lucide="shopping-cart"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Billing Section -->
+        <section id="billing" class="section">
+            <div class="section-header">
+                <div>
+                    <h1 class="section-title">Quick Billing</h1>
+                    <p class="section-subtitle">GST-compliant instant invoicing</p>
+                </div>
+            </div>
+
+            <div class="billing-container">
+                <div class="billing-left">
+                    <div class="search-product">
+                        <i data-lucide="search"></i>
+                        <input type="text" placeholder="Search or scan product..." id="productSearch">
+                        <button class="btn-icon">
+                            <i data-lucide="scan"></i>
+                        </button>
+                    </div>
+
+                    <div class="product-grid">
+                        <div class="product-card" onclick="addToBill('Maggi Noodles', 12)">
+                            <div class="product-card-img">M</div>
+                            <div class="product-card-name">Maggi Noodles</div>
+                            <div class="product-card-price">₹12</div>
+                        </div>
+                        <div class="product-card" onclick="addToBill('Parle-G', 10)">
+                            <div class="product-card-img">P</div>
+                            <div class="product-card-name">Parle-G</div>
+                            <div class="product-card-price">₹10</div>
+                        </div>
+                        <div class="product-card" onclick="addToBill('Tata Tea', 250)">
+                            <div class="product-card-img">T</div>
+                            <div class="product-card-name">Tata Tea</div>
+                            <div class="product-card-price">₹250</div>
+                        </div>
+                        <div class="product-card" onclick="addToBill('Amul Butter', 55)">
+                            <div class="product-card-img">A</div>
+                            <div class="product-card-name">Amul Butter</div>
+                            <div class="product-card-price">₹55</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="billing-right">
+                    <div class="bill-card">
+                        <div class="bill-header">
+                            <h3>Current Bill</h3>
+                            <button class="btn-text" onclick="clearBill()">Clear All</button>
+                        </div>
+
+                        <div class="bill-items" id="billItems">
+                            <div class="empty-state">
+                                <i data-lucide="shopping-bag"></i>
+                                <p>Add products to start billing</p>
+                            </div>
+                        </div>
+
+                        <div class="bill-summary">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span id="subtotal">₹0</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>GST (5%)</span>
+                                <span id="gst">₹0</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total</span>
+                                <span id="total">₹0</span>
+                            </div>
+                        </div>
+
+                        <div class="payment-methods">
+                            <button class="payment-btn active">
+                                <i data-lucide="wallet"></i>
+                                Cash
+                            </button>
+                            <button class="payment-btn">
+                                <i data-lucide="smartphone"></i>
+                                UPI
+                            </button>
+                            <button class="payment-btn">
+                                <i data-lucide="credit-card"></i>
+                                Card
+                            </button>
+                        </div>
+
+                        <button class="btn-primary btn-block" onclick="completeBilling()">
+                            <i data-lucide="check-circle"></i>
+                            Complete & Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Voice Assistant Section -->
+        <section id="voice" class="section">
+            <div class="section-header">
+                <div>
+                    <h1 class="section-title">Voice AI Assistant</h1>
+                    <p class="section-subtitle">Speak in Hindi, Tamil, or Telugu</p>
+                </div>
+            </div>
+
+            <div class="voice-container">
+                <div class="voice-card">
+                    <div class="voice-visual">
+                        <div class="voice-circle" id="voiceCircle">
+                            <i data-lucide="mic" class="voice-icon"></i>
+                        </div>
+                        <div class="voice-waves">
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                            <div class="wave"></div>
+                        </div>
+                    </div>
+
+                    <div class="voice-status" id="voiceStatus">
+                        <h3>Tap to speak</h3>
+                        <p>Try: "Maggi ka stock kitna hai?" or "Today's sales batao"</p>
+                    </div>
+
+                    <button class="btn-voice" id="voiceBtn" onclick="toggleVoice()">
+                        <i data-lucide="mic"></i>
+                        Start Listening
+                    </button>
+
+                    <div class="language-selector">
+                        <button class="lang-btn active">हिंदी</button>
+                        <button class="lang-btn">தமிழ்</button>
+                        <button class="lang-btn">తెలుగు</button>
+                        <button class="lang-btn">English</button>
+                    </div>
+                </div>
+
+                <div class="voice-examples">
+                    <h3>Try These Commands</h3>
+                    <div class="example-grid">
+                        <div class="example-card" onclick="simulateVoiceCommand('stock')">
+                            <i data-lucide="package"></i>
+                            <p>"Maggi ka stock kitna hai?"</p>
+                            <span class="example-lang">Hindi</span>
+                        </div>
+                        <div class="example-card" onclick="simulateVoiceCommand('sales')">
+                            <i data-lucide="indian-rupee"></i>
+                            <p>"Today's total sales batao"</p>
+                            <span class="example-lang">Hinglish</span>
+                        </div>
+                        <div class="example-card" onclick="simulateVoiceCommand('customer')">
+                            <i data-lucide="user"></i>
+                            <p>"Ravi ko ₹200 udhar de do"</p>
+                            <span class="example-lang">Hindi</span>
+                        </div>
+                        <div class="example-card" onclick="simulateVoiceCommand('bill')">
+                            <i data-lucide="receipt"></i>
+                            <p>"₹500 ka bill banao"</p>
+                            <span class="example-lang">Hindi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="section">
+            <div class="section-header">
+                <div>
+                    <h1 class="section-title">AI-Powered Analytics</h1>
+                    <p class="section-subtitle">Demand forecasting & business insights</p>
+                </div>
+            </div>
+
+            <!-- Forecast Card -->
+            <div class="forecast-card">
+                <div class="forecast-header">
+                    <div>
+                        <h3>7-Day Demand Forecast</h3>
+                        <p>AI predicts sales based on historical data & trends</p>
+                    </div>
+                    <div class="forecast-accuracy">
+                        <span class="accuracy-badge">92% Accurate</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+                <div class="forecast-insights">
+                    <div class="forecast-insight">
+                        <i data-lucide="trending-up"></i>
+                        <span>Expected 18% increase on Saturday (weekend rush)</span>
+                    </div>
+                    <div class="forecast-insight">
+                        <i data-lucide="calendar"></i>
+                        <span>Stock up 30% more for upcoming festival week</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Insights -->
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3 class="analytics-title">Top Customers</h3>
+                    <div class="customer-list">
+                        <div class="customer-item">
+                            <div class="customer-avatar">R</div>
+                            <div class="customer-info">
+                                <div class="customer-name">Ravi Kumar</div>
+                                <div class="customer-meta">42 purchases • ₹12,450</div>
+                            </div>
+                            <span class="badge badge-gold">VIP</span>
+                        </div>
+                        <div class="customer-item">
+                            <div class="customer-avatar">P</div>
+                            <div class="customer-info">
+                                <div class="customer-name">Priya Sharma</div>
+                                <div class="customer-meta">38 purchases • ₹10,200</div>
+                            </div>
+                            <span class="badge badge-silver">Regular</span>
+                        </div>
+                        <div class="customer-item">
+                            <div class="customer-avatar">A</div>
+                            <div class="customer-info">
+                                <div class="customer-name">Amit Patel</div>
+                                <div class="customer-meta">35 purchases • ₹9,800</div>
+                            </div>
+                            <span class="badge badge-silver">Regular</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <h3 class="analytics-title">Peak Hours</h3>
+                    <div class="chart-container">
+                        <canvas id="peakHoursChart"></canvas>
+                    </div>
+                    <div class="peak-insights">
+                        <div class="peak-insight">
+                            <i data-lucide="sunrise"></i>
+                            <span>Morning: 8-10 AM (₹8,500 avg)</span>
+                        </div>
+                        <div class="peak-insight">
+                            <i data-lucide="sunset"></i>
+                            <span>Evening: 6-8 PM (₹15,200 avg)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="btn-text" onclick="closeNotifications()">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item unread">
+                <div class="notification-icon" style="background: #000;">
+                    <i data-lucide="alert-triangle"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Low Stock Alert</div>
+                    <div class="notification-text">Parle-G Biscuits: Only 8 units left</div>
+                    <div class="notification-time">2 minutes ago</div>
+                </div>
+            </div>
+            <div class="notification-item unread">
+                <div class="notification-icon" style="background: #000;">
+                    <i data-lucide="trending-up"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">High Demand Detected</div>
+                    <div class="notification-text">Maggi sales up 45% - consider restocking</div>
+                    <div class="notification-time">1 hour ago</div>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon" style="background: #000;">
+                    <i data-lucide="calendar"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">Festival Reminder</div>
+                    <div class="notification-text">Diwali in 15 days - prepare inventory</div>
+                    <div class="notification-time">3 hours ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon success">
+                <i data-lucide="check-circle"></i>
+            </div>
+            <h3>Bill Generated Successfully!</h3>
+            <p>Invoice #INV-2025-001 created</p>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn-primary">
+                    <i data-lucide="printer"></i>
+                    Print Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+<styles>
+    /* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Colors - Black & White Theme */
+    --primary: #000000;
+    --primary-light: #1a1a1a;
+    --primary-dark: #000000;
+    --secondary: #ffffff;
+    --accent: #333333;
+    
+    /* Semantic Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+    
+    /* Neutral Colors */
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+    
+    /* Typography */
+    --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'SF Mono', 'Monaco', 'Courier New', monospace;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--gray-50);
+    color: var(--gray-900);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Navigation */
+.navbar {
+    background: var(--secondary);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--primary);
+}
+
+.brand-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.beta-badge {
+    background: var(--primary);
+    color: var(--secondary);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nav-menu {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--gray-600);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-link:hover {
+    background: var(--gray-100);
+    color: var(--primary);
+}
+
+.nav-link.active {
+    background: var(--primary);
+    color: var(--secondary);
+}
+
+.nav-link i {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.btn-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.btn-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-icon:active::before {
+    width: 100px;
+    height: 100px;
+}
+
+.btn-icon:hover {
+    background: var(--gray-200);
+    transform: scale(1.05);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--danger);
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main Content */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.section-subtitle {
+    color: var(--gray-500);
+    font-size: 16px;
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--primary);
+    border: 1px solid var(--gray-300);
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-secondary:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-secondary:hover {
+    background: var(--gray-100);
+    border-color: var(--primary);
+    transform: scale(1.02);
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-300);
+    background: var(--secondary);
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-sm::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-sm:active::before {
+    width: 200px;
+    height: 200px;
+}
+
+.btn-sm:hover {
+    background: var(--primary);
+    color: var(--secondary);
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--gray-600);
+    cursor: pointer;
+    font-weight: 500;
+    padding: var(--spacing-sm);
+    transition: all 0.2s;
+}
+
+.btn-text:hover {
+    color: var(--primary);
+    transform: scale(1.05);
+}
+
+.btn-icon-sm {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-icon-sm::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-icon-sm:active::before {
+    width: 80px;
+    height: 80px;
+}
+
+.btn-icon-sm:hover {
+    background: var(--primary);
+    color: var(--secondary);
+    transform: scale(1.1);
+}
+
+/* Select Input */
+.select-input {
+    padding: 10px 16px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    background: var(--secondary);
+    color: var(--primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.select-input:hover {
+    border-color: var(--primary);
+}
+
+/* KPI Cards */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.kpi-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.kpi-card:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
+    border-color: var(--primary);
+}
+
+.kpi-card:hover::before {
+    transform: scaleX(1);
+}
+
+.kpi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+}
+
+.kpi-icon i {
+    width: 24px;
+    height: 24px;
+}
+
+.kpi-trend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.kpi-trend.positive {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.kpi-trend.warning {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.kpi-trend i {
+    width: 14px;
+    height: 14px;
+}
+
+.kpi-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.kpi-label {
+    color: var(--gray-600);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+}
+
+.kpi-footer {
+    color: var(--gray-500);
+    font-size: 13px;
+}
+
+/* Charts */
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.chart-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.chart-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+.chart-container canvas {
+    max-height: 300px;
+}
+
+/* Insights */
+.insights-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.insights-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.insight-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.insight-card:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-4px);
+    border-color: var(--primary);
+}
+
+.insight-card:hover .insight-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.insight-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+    flex-shrink: 0;
+    transition: transform 0.3s;
+}
+
+.insight-content {
+    flex: 1;
+}
+
+.insight-content h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.insight-content p {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.5;
+}
+
+/* Inventory Stats */
+.inventory-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.stat-card i {
+    width: 32px;
+    height: 32px;
+    color: var(--primary);
+}
+
+.stat-card.alert i {
+    color: var(--warning);
+}
+
+.stat-card.warning i {
+    color: var(--danger);
+}
+
+.stat-card.success i {
+    color: var(--success);
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--gray-600);
+}
+
+/* Table */
+.table-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.table-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: var(--gray-100);
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-box i {
+    width: 18px;
+    height: 18px;
+    color: var(--gray-500);
+}
+
+.search-box input {
+    border: none;
+    background: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    color: var(--primary);
+}
+
+.table-filters {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--gray-300);
+    background: var(--secondary);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: var(--primary);
+}
+
+.filter-btn.active {
+    background: var(--primary);
+    color: var(--secondary);
+    border-color: var(--primary);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead {
+    background: var(--gray-50);
+}
+
+.data-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-700);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.data-table td {
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--gray-200);
+    font-size: 14px;
+}
+
+.data-table tbody tr {
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.data-table tbody tr:hover {
+    background: var(--gray-50);
+    transform: scale(1.01);
+}
+
+.data-table tbody tr:active {
+    transform: scale(0.99);
+}
+
+.product-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.product-img {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.product-name {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.product-sku {
+    font-size: 12px;
+    color: var(--gray-500);
+}
+
+.stock-qty {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.stock-qty.warning {
+    color: var(--warning);
+}
+
+.stock-qty.danger {
+    color: var(--danger);
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.badge-gold {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.badge-silver {
+    background: var(--gray-200);
+    color: var(--gray-700);
+}
+
+.forecast {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--gray-600);
+}
+
+.forecast i {
+    width: 14px;
+    height: 14px;
+}
+
+/* Billing */
+.billing-container {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--spacing-lg);
+}
+
+.billing-left {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.search-product {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: var(--gray-100);
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.search-product i {
+    width: 20px;
+    height: 20px;
+    color: var(--gray-500);
+}
+
+.search-product input {
+    border: none;
+    background: none;
+    outline: none;
+    flex: 1;
+    font-size: 15px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+
+.product-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.product-card:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.product-card:hover {
+    background: var(--primary);
+    color: var(--secondary);
+    border-color: var(--primary);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+}
+
+.product-card-img {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0 auto var(--spacing-sm);
+}
+
+.product-card:hover .product-card-img {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+.product-card-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.product-card-price {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--primary);
+}
+
+.product-card:hover .product-card-price {
+    color: var(--secondary);
+}
+
+.billing-right {
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+.bill-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.bill-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.bill-items {
+    min-height: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: var(--spacing-lg);
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    color: var(--gray-400);
+}
+
+.empty-state i {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--spacing-md);
+}
+
+.bill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--gray-200);
+    animation: slideIn 0.3s ease;
+}
+
+.bill-item-info {
+    flex: 1;
+}
+
+.bill-item-name {
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.bill-item-qty {
+    font-size: 13px;
+    color: var(--gray-500);
+}
+
+.bill-item-price {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.bill-summary {
+    padding: var(--spacing-lg) 0;
+    border-top: 2px solid var(--gray-200);
+    margin-bottom: var(--spacing-lg);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+    font-size: 14px;
+}
+
+.summary-row.total {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--gray-200);
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.payment-btn {
+    padding: var(--spacing-md);
+    border: 1px solid var(--gray-300);
+    background: var(--secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.payment-btn:hover {
+    border-color: var(--primary);
+}
+
+.payment-btn.active {
+    background: var(--primary);
+    color: var(--secondary);
+    border-color: var(--primary);
+}
+
+.payment-btn i {
+    width: 20px;
+    height: 20px;
+}
+
+/* Voice Assistant */
+.voice-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+.voice-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    text-align: center;
+}
+
+.voice-visual {
+    position: relative;
+    margin-bottom: var(--spacing-xl);
+}
+
+.voice-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s;
+}
+
+.voice-circle.active {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.voice-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--secondary);
+}
+
+.voice-waves {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+}
+
+.wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.voice-circle.active ~ .voice-waves .wave {
+    animation: wave 2s infinite;
+}
+
+.wave:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.wave:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes wave {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.voice-status {
+    margin-bottom: var(--spacing-xl);
+}
+
+.voice-status h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.voice-status p {
+    color: var(--gray-600);
+    font-size: 15px;
+}
+
+.btn-voice {
+    background: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 16px 32px;
+    border-radius: var(--radius-lg);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all 0.2s;
+    margin-bottom: var(--spacing-xl);
+}
+
+.btn-voice:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-voice i {
+    width: 20px;
+    height: 20px;
+}
+
+.language-selector {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+}
+
+.lang-btn {
+    padding: 10px 20px;
+    border: 1px solid var(--gray-300);
+    background: var(--secondary);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lang-btn:hover {
+    border-color: var(--primary);
+}
+
+.lang-btn.active {
+    background: var(--primary);
+    color: var(--secondary);
+    border-color: var(--primary);
+}
+
+.voice-examples {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.voice-examples h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.example-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.example-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.example-card:hover {
+    background: var(--primary);
+    color: var(--secondary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.example-card i {
+    width: 24px;
+    height: 24px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary);
+}
+
+.example-card:hover i {
+    color: var(--secondary);
+}
+
+.example-card p {
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary);
+}
+
+.example-card:hover p {
+    color: var(--secondary);
+}
+
+.example-lang {
+    font-size: 12px;
+    color: var(--gray-500);
+}
+
+.example-card:hover .example-lang {
+    color: var(--gray-300);
+}
+
+/* Analytics */
+.forecast-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.forecast-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-xl);
+}
+
+.forecast-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.forecast-header p {
+    color: var(--gray-600);
+    font-size: 14px;
+}
+
+.accuracy-badge {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 6px 16px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.forecast-insights {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.forecast-insight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--gray-700);
+}
+
+.forecast-insight i {
+    width: 18px;
+    height: 18px;
+    color: var(--primary);
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.analytics-card {
+    background: var(--secondary);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.analytics-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.customer-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.customer-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+}
+
+.customer-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.customer-info {
+    flex: 1;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.customer-meta {
+    font-size: 13px;
+    color: var(--gray-500);
+}
+
+.peak-insights {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.peak-insight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--gray-700);
+}
+
+.peak-insight i {
+    width: 18px;
+    height: 18px;
+    color: var(--primary);
+}
+
+/* Notification Panel */
+.notification-panel {
+    position: fixed;
+    top: 64px;
+    right: -400px;
+    width: 400px;
+    height: calc(100vh - 64px);
+    background: var(--secondary);
+    border-left: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-xl);
+    transition: right 0.3s;
+    z-index: 99;
+}
+
+.notification-panel.open {
+    right: 0;
+}
+
+.notification-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.notification-list {
+    overflow-y: auto;
+    height: calc(100% - 64px);
+}
+
+.notification-item {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.notification-item:hover {
+    background: var(--gray-50);
+}
+
+.notification-item.unread {
+    background: #fafafa;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary);
+    flex-shrink: 0;
+}
+
+.notification-icon i {
+    width: 20px;
+    height: 20px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.notification-text {
+    font-size: 14px;
+    color: var(--gray-600);
+    margin-bottom: 4px;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: var(--gray-500);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--secondary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    max-width: 400px;
+    text-align: center;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+}
+
+.modal-icon.success {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.modal-icon i {
+    width: 40px;
+    height: 40px;
+}
+
+.modal-content h3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.modal-content p {
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-xl);
+}
+
+.modal-actions {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.modal-actions button {
+    flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .charts-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .billing-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .inventory-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .billing-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .billing-right {
+        position: static;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .voice-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .example-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus States for Accessibility */
+button:focus,
+input:focus,
+select:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .nav-actions,
+    .header-actions,
+    .btn-primary,
+    .btn-secondary {
+        display: none;
+    }
+    
+    .main-content {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .section {
+        display: block !important;
+        page-break-after: always;
+    }
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--primary);
+    color: var(--secondary);
+    padding: 16px 24px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-xl);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast i {
+    width: 20px;
+    height: 20px;
+    color: #10b981;
+}
+
+.toast span {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Slide In Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Pulse Animation for Icons */
+@keyframes iconPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.kpi-icon:hover {
+    animation: iconPulse 0.6s ease;
+}
+</styles>
+<script>
+    // Navigation
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        
+        // Update active nav link
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        
+        // Show target section
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(targetId).classList.add('active');
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
+
+// Notification Panel
+document.getElementById('notificationBtn').addEventListener('click', () => {
+    document.getElementById('notificationPanel').classList.toggle('open');
+});
+
+function closeNotifications() {
+    document.getElementById('notificationPanel').classList.remove('open');
+}
+
+// Charts
+function initCharts() {
+    // Sales Trend Chart
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    new Chart(salesCtx, {
+        type: 'line',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Sales (₹)',
+                data: [32000, 35000, 38000, 36000, 40000, 45000, 42000],
+                borderColor: '#000000',
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointRadius: 6,
+                pointBackgroundColor: '#000000',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointHoverRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#000000',
+                    padding: 12,
+                    titleFont: {
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    bodyFont: {
+                        size: 13
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            return 'Sales: ₹' + context.parsed.y.toLocaleString('en-IN');
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + (value/1000) + 'k';
+                        }
+                    },
+                    grid: {
+                        color: '#f5f5f5'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // Category Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    new Chart(categoryCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Groceries', 'Beverages', 'Snacks', 'Dairy', 'Others'],
+            datasets: [{
+                data: [35, 25, 20, 15, 5],
+                backgroundColor: [
+                    '#000000',
+                    '#333333',
+                    '#666666',
+                    '#999999',
+                    '#cccccc'
+                ],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 15,
+                        font: {
+                            size: 13,
+                            weight: '500'
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#000000',
+                    padding: 12,
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Forecast Chart
+    const forecastCtx = document.getElementById('forecastChart').getContext('2d');
+    new Chart(forecastCtx, {
+        type: 'line',
+        data: {
+            labels: ['Today', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+            datasets: [
+                {
+                    label: 'Actual Sales',
+                    data: [45000, null, null, null, null, null, null],
+                    borderColor: '#000000',
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 3,
+                    pointRadius: 8,
+                    pointBackgroundColor: '#000000',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2
+                },
+                {
+                    label: 'AI Forecast',
+                    data: [45000, 47000, 49000, 48000, 52000, 58000, 55000],
+                    borderColor: '#666666',
+                    backgroundColor: 'rgba(102, 102, 102, 0.1)',
+                    borderDash: [8, 4],
+                    borderWidth: 2,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#666666',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2.5,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        padding: 15,
+                        font: {
+                            size: 13,
+                            weight: '500'
+                        },
+                        usePointStyle: true
+                    }
+                },
+                tooltip: {
+                    backgroundColor: '#000000',
+                    padding: 12,
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ₹' + context.parsed.y.toLocaleString('en-IN');
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + (value/1000) + 'k';
+                        }
+                    },
+                    grid: {
+                        color: '#f5f5f5'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    // Peak Hours Chart
+    const peakCtx = document.getElementById('peakHoursChart').getContext('2d');
+    new Chart(peakCtx, {
+        type: 'bar',
+        data: {
+            labels: ['6-8 AM', '8-10 AM', '10-12 PM', '12-2 PM', '2-4 PM', '4-6 PM', '6-8 PM', '8-10 PM'],
+            datasets: [{
+                label: 'Sales (₹)',
+                data: [3500, 8500, 6000, 7500, 5000, 9000, 15200, 8000],
+                backgroundColor: '#000000',
+                borderRadius: 6,
+                barThickness: 30
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 1.8,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#000000',
+                    padding: 12,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Sales: ₹' + context.parsed.y.toLocaleString('en-IN');
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + (value/1000) + 'k';
+                        }
+                    },
+                    grid: {
+                        color: '#f5f5f5'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Billing Functions
+let billItems = [];
+let billTotal = 0;
+
+function addToBill(name, price) {
+    const existingItem = billItems.find(item => item.name === name);
+    
+    if (existingItem) {
+        existingItem.quantity++;
+        existingItem.total = existingItem.quantity * existingItem.price;
+    } else {
+        billItems.push({
+            name: name,
+            price: price,
+            quantity: 1,
+            total: price
+        });
+    }
+    
+    updateBillDisplay();
+    
+    // Add visual feedback
+    const btn = event.target.closest('.product-card');
+    if (btn) {
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            btn.style.transform = '';
+        }, 200);
+    }
+    
+    // Show success toast
+    showToast(`${name} added to bill!`);
+}
+
+function updateBillDisplay() {
+    const billItemsContainer = document.getElementById('billItems');
+    
+    if (billItems.length === 0) {
+        billItemsContainer.innerHTML = `
+            <div class="empty-state">
+                <i data-lucide="shopping-bag"></i>
+                <p>Add products to start billing</p>
+            </div>
+        `;
+        lucide.createIcons();
+        document.getElementById('subtotal').textContent = '₹0';
+        document.getElementById('gst').textContent = '₹0';
+        document.getElementById('total').textContent = '₹0';
+        return;
+    }
+    
+    billItemsContainer.innerHTML = billItems.map((item, index) => `
+        <div class="bill-item" style="animation: slideIn 0.3s ease ${index * 0.05}s both;">
+            <div class="bill-item-info">
+                <div class="bill-item-name">${item.name}</div>
+                <div class="bill-item-qty">Qty: ${item.quantity} × ₹${item.price}</div>
+            </div>
+            <div class="bill-item-price">₹${item.total}</div>
+        </div>
+    `).join('');
+    
+    const subtotal = billItems.reduce((sum, item) => sum + item.total, 0);
+    const gst = Math.round(subtotal * 0.05);
+    const total = subtotal + gst;
+    
+    animateValue('subtotal', parseInt(document.getElementById('subtotal').textContent.replace('₹', '')) || 0, subtotal, 300);
+    animateValue('gst', parseInt(document.getElementById('gst').textContent.replace('₹', '')) || 0, gst, 300);
+    animateValue('total', parseInt(document.getElementById('total').textContent.replace('₹', '')) || 0, total, 300);
+}
+
+function animateValue(id, start, end, duration) {
+    const element = document.getElementById(id);
+    const range = end - start;
+    const increment = range / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+            current = end;
+            clearInterval(timer);
+        }
+        element.textContent = '₹' + Math.round(current);
+    }, 16);
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `
+        <i data-lucide="check-circle"></i>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
+    lucide.createIcons();
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
+    }, 2000);
+}
+
+function clearBill() {
+    billItems = [];
+    updateBillDisplay();
+}
+
+function completeBilling() {
+    if (billItems.length === 0) {
+        alert('Please add items to the bill first!');
+        return;
+    }
+    
+    document.getElementById('successModal').classList.add('open');
+    
+    // Clear bill after 2 seconds
+    setTimeout(() => {
+        clearBill();
+    }, 2000);
+}
+
+function closeModal() {
+    document.getElementById('successModal').classList.remove('open');
+}
+
+// Voice Assistant
+let isListening = false;
+
+function toggleVoice() {
+    isListening = !isListening;
+    const voiceCircle = document.getElementById('voiceCircle');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const voiceStatus = document.getElementById('voiceStatus');
+    
+    if (isListening) {
+        voiceCircle.classList.add('active');
+        voiceBtn.innerHTML = '<i data-lucide="mic-off"></i> Stop Listening';
+        voiceStatus.innerHTML = '<h3>Listening...</h3><p>Speak now in your preferred language</p>';
+        
+        // Simulate voice recognition after 2 seconds
+        setTimeout(() => {
+            simulateVoiceCommand('demo');
+        }, 2000);
+    } else {
+        voiceCircle.classList.remove('active');
+        voiceBtn.innerHTML = '<i data-lucide="mic"></i> Start Listening';
+        voiceStatus.innerHTML = '<h3>Tap to speak</h3><p>Try: "Maggi ka stock kitna hai?" or "Today\'s sales batao"</p>';
+    }
+    
+    lucide.createIcons();
+}
+
+function simulateVoiceCommand(type) {
+    const voiceStatus = document.getElementById('voiceStatus');
+    const responses = {
+        stock: {
+            command: '"Maggi ka stock kitna hai?"',
+            response: 'Maggi Noodles: 45 units in stock. Good stock level.'
+        },
+        sales: {
+            command: '"Today\'s total sales batao"',
+            response: 'Today\'s total sales: ₹45,280. Up 12.5% from yesterday.'
+        },
+        customer: {
+            command: '"Ravi ko ₹200 udhar de do"',
+            response: 'Credit of ₹200 added to Ravi Kumar\'s account. Total due: ₹1,200.'
+        },
+        bill: {
+            command: '"₹500 ka bill banao"',
+            response: 'Bill created for ₹500. Ready to print.'
+        },
+        demo: {
+            command: 'Voice command detected',
+            response: 'Processing your request...'
+        }
+    };
+    
+    const response = responses[type] || responses.demo;
+    
+    voiceStatus.innerHTML = `
+        <h3>You said: ${response.command}</h3>
+        <p style="color: #10b981; font-weight: 600; margin-top: 16px;">✓ ${response.response}</p>
+    `;
+    
+    // Reset after 3 seconds
+    setTimeout(() => {
+        if (isListening) {
+            voiceStatus.innerHTML = '<h3>Listening...</h3><p>Speak now in your preferred language</p>';
+        }
+    }, 3000);
+}
+
+// Inventory Search
+document.getElementById('inventorySearch')?.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    const rows = document.querySelectorAll('#inventoryTableBody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchTerm) ? '' : 'none';
+    });
+});
+
+// Initialize charts when page loads
+window.addEventListener('load', () => {
+    initCharts();
+    lucide.createIcons();
+});
+
+// Language selector
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
+});
+
+// Payment method selector
+document.querySelectorAll('.payment-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    });
+});
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filter logic would go here
+        const filter = btn.textContent.toLowerCase();
+        console.log('Filtering by:', filter);
+    });
+});
+
+// Close modal on outside click
+document.getElementById('successModal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'successModal') {
+        closeModal();
+    }
+});
+
+// Close notification panel on outside click
+document.addEventListener('click', (e) => {
+    const panel = document.getElementById('notificationPanel');
+    const btn = document.getElementById('notificationBtn');
+    
+    if (!panel.contains(e.target) && !btn.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+</script>
