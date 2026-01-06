@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
@@ -17,7 +17,7 @@ export default function Home() {
       <Header activeView={activeView} setActiveView={setActiveView} />
       <main className="main-container">
         <div id="dashboard-view" className={`view ${activeView === 'dashboard' ? 'active' : ''}`}>
-          {activeView === 'dashboard' && <DashboardView />}
+          {activeView === 'dashboard' && <DashboardView setActiveView={setActiveView} />} {/* Pass setActiveView */}
         </div>
         <div id="pos-view" className={`view ${activeView === 'pos' ? 'active' : ''}`}>
           {activeView === 'pos' && <POSView />}

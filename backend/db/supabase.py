@@ -124,40 +124,33 @@ def create_sale(sale_data: Dict[str, Any], sale_items: List[Dict[str, Any]]) -> 
 
 def get_sale_by_id(sale_id: str) -> Optional[Dict[str, Any]]:
     """Get a sale by ID with its items."""
-    # Get sale
-    sale_response = supabase.from_("sales").select("*").eq("id", sale_id).maybe_single().execute()
-    if not sale_response.data:
+    # Fetch sale and its associated sale_items in a single query
+    response = supabase.from_("sales").select("*, items:sale_items(*)").eq("id", sale_id).maybe_single().execute()
+    if not response.data:
         return None
     
-    sale = sale_response.data
+    sale = response.data
     
-    # Get sale items
-    items_response = supabase.from_("sale_items").select("*").eq("sale_id", sale_id).execute()
+    # For each item, fetch product details to get name, category, and current stock
+    for item_data in sale.get("items", []) :
+        product = get_product_by_barcode(item_data["barcode"])
+        if product:
+            item_data["name"] = product.get("name", "")
+            item_data["category"] = product.get("category", "")
+            item_data["stock"] = product.get("stock", 0) # Current stock, not historical
+        else:
+            # Handle case where product might have been deleted
+            item_data["name"] = "Unknown Product"
+            item_data["category"] = "Unknown"
+            item_data["stock"] = 0
     
-    # Transform items to match CartItem structure
-    # Fetch product details for each item
-    items = []
-    if items_response.data:
-        for item in items_response.data:
-            # Get product details
-            product = get_product_by_barcode(item["barcode"])
-            items.append({
-                "barcode": item["barcode"],
-                "name": product.get("name", "") if product else "",
-                "category": product.get("category", "") if product else "",
-                "price": float(item["price"]),
-                "cost": float(item["cost"]),
-                "stock": product.get("stock", 0) if product else 0,  # Current stock, not historical
-                "quantity": item["quantity"]
-            })
-    
-    sale["items"] = items
     return sale
 
 
 def get_all_sales(start_date: Optional[str] = None, end_date: Optional[str] = None) -> List[Dict[str, Any]]:
     """Get all sales, optionally filtered by date range."""
-    query = supabase.from_("sales").select("*").order("date", desc=True)
+    # Fetch sales and their associated sale_items in a single query
+    query = supabase.from_("sales").select("*, items:sale_items(*)").order("date", desc=True)
     
     if start_date:
         query = query.gte("date", start_date)
@@ -165,16 +158,23 @@ def get_all_sales(start_date: Optional[str] = None, end_date: Optional[str] = No
         query = query.lte("date", end_date)
     
     response = query.execute()
-    sales = response.data if response.data else []
+    sales_data = response.data if response.data else []
     
-    # Fetch items for each sale
-    result = []
-    for sale in sales:
-        sale_with_items = get_sale_by_id(sale["id"])
-        if sale_with_items:
-            result.append(sale_with_items)
-    
-    return result
+    # For each sale, and for each item within that sale, fetch product details
+    for sale in sales_data:
+        for item_data in sale.get("items", []) :
+            product = get_product_by_barcode(item_data["barcode"])
+            if product:
+                item_data["name"] = product.get("name", "")
+                item_data["category"] = product.get("category", "")
+                item_data["stock"] = product.get("stock", 0) # Current stock, not historical
+            else:
+                # Handle case where product might have been deleted
+                item_data["name"] = "Unknown Product"
+                item_data["category"] = "Unknown"
+                item_data["stock"] = 0
+
+    return sales_data
 
 
 # ==================== DASHBOARD OPERATIONS ====================

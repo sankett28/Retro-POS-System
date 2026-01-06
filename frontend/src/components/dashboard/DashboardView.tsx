@@ -8,8 +8,13 @@ import Button from '@/components/ui/Button';
 import { useApp } from '@/context/AppContext';
 import { useSales } from '@/hooks/useSales';
 import { formatCurrency } from '@/lib/utils/formatters';
+import { ViewType } from '@/types';
 
-export default function DashboardView() {
+interface DashboardViewProps {
+  setActiveView: (view: ViewType) => void; // Define prop for setActiveView
+}
+
+export default function DashboardView({ setActiveView }: DashboardViewProps) {
   const { refreshData } = useApp();
   const { dashboardStats } = useSales();
 
@@ -84,7 +89,7 @@ export default function DashboardView() {
         />
       </div>
 
-      <RecentTransactions />
+      <RecentTransactions setActiveView={setActiveView} /> {/* Pass setActiveView */}
     </div>
   );
 }
