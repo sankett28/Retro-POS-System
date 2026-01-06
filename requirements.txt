@@ -14,3 +14,10 @@
 #   1. Backend: Follow instructions in backend/README.md
 #   2. Frontend: Follow instructions in frontend/package.json or root README.md
 
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+pydantic==2.9.2
+python-multipart==0.0.12
+python-dotenv==1.0.1
+supabase==2.8.0
+

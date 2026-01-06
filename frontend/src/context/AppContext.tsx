@@ -37,6 +37,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ]);
       setProducts(productsData);
       setSales(salesData);
+      console.log("Sales data fetched in AppContext:", JSON.stringify(salesData, null, 2)); // MODIFIED
     } catch (error) {
       console.error('Failed to refresh data:', error);
     }

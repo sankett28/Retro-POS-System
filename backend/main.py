@@ -54,9 +54,7 @@ app.add_middleware(
 # Helper function to calculate dashboard stats
 def calculate_dashboard_stats(products: List[Product], sales: List[Sale]) -> DashboardStats:
     """Calculate dashboard statistics."""
-    from datetime import datetime as dt
-    
-    today = dt.now().date().isoformat()
+    today = datetime.now().date().isoformat()
     today_sales = [s for s in sales if s.date.split('T')[0] == today]
     
     # Calculate totals
@@ -90,7 +88,6 @@ def calculate_dashboard_stats(products: List[Product], sales: List[Sale]) -> Das
         lowStock=low_stock_count,
         avgSale=avg_sale,
     )
-
 
 # ==================== PRODUCT ENDPOINTS ====================
 

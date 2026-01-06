@@ -30,6 +30,7 @@ export interface DashboardStats {
   inventoryValue: number;
   lowStock: number;
   avgSale: number;
+  customers: number;
 }
 
 export type ViewType = 'dashboard' | 'pos' | 'products' | 'inventory' | 'reports';

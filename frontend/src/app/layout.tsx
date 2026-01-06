@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   authors: [{ name: 'Helium AI' }],
 };
 
+import Header from '@/components/layout/Header';
+
 export default function RootLayout({
   children,
 }: {
@@ -20,7 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AppProvider>
-          {children}
+          <Header />
+          <main className="main-container">
+            {children}
+          </main>
         </AppProvider>
       </body>
     </html>

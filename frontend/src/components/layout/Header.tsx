@@ -1,51 +1,19 @@
 'use client';
 
-import { Store, LayoutDashboard, Receipt, Package, Warehouse, TrendingUp, Bell, UserCircle } from 'lucide-react';
-import { ViewType } from '@/types';
-import React, { useEffect } from 'react';
+import { Store, LayoutDashboard, Receipt, Package, TrendingUp, Bell, UserCircle } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React from 'react';
 
-interface HeaderProps {
-  activeView: ViewType;
-  setActiveView: (view: ViewType) => void;
-}
-
-export default function Header({ activeView, setActiveView }: HeaderProps) {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.altKey) {
-        switch (event.key) {
-          case 'd':
-            event.preventDefault();
-            setActiveView('dashboard');
-            break;
-          case 'p':
-            event.preventDefault();
-            setActiveView('pos');
-            break;
-          case 'i':
-            event.preventDefault();
-            setActiveView('inventory');
-            break;
-          case 'r':
-            event.preventDefault();
-            setActiveView('reports');
-            break;
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [setActiveView]);
+export default function Header() {
+  const pathname = usePathname();
 
   const navLinks = [
-    { id: 'dashboard' as ViewType, icon: LayoutDashboard, label: 'Dashboard' },
-    { id: 'inventory' as ViewType, icon: Package, label: 'Inventory' },
-    { id: 'pos' as ViewType, icon: Receipt, label: 'Billing' },
-    { id: 'products' as ViewType, icon: Package, label: 'Products' },
-    { id: 'reports' as ViewType, icon: TrendingUp, label: 'Analytics' },
+    { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { href: '/inventory', icon: Package, label: 'Inventory' },
+    { href: '/billing', icon: Receipt, label: 'Billing' },
+    { href: '/products', icon: Package, label: 'Products' },
+    { href: '/analytics', icon: TrendingUp, label: 'Analytics' },
   ];
 
   return (
@@ -59,19 +27,16 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
         <div className="nav-menu">
           {navLinks.map((link) => {
             const Icon = link.icon;
+            const isActive = pathname === link.href;
             return (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                className={`nav-link ${activeView === link.id ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveView(link.id);
-                }}
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`nav-link ${isActive ? 'active' : ''}`}
               >
                 <Icon size={18} />
                 {link.label}
-              </a>
+              </Link>
             );
           })}
         </div>
@@ -88,4 +53,3 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
     </nav>
   );
 }
-

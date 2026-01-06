@@ -36,16 +36,15 @@ def _row_to_product(row: Dict[str, Any]) -> Product:
 
 def _row_to_sale(row: Dict[str, Any]) -> Sale:
     """Convert database row to Sale model with items."""
-    # Ensure items are converted to CartItem models
     items = []
-    for item in row.get("items", []):
+    for item in row.get("items", []) :
         items.append(CartItem(
             barcode=item["barcode"],
-            name=item.get("name", ""),
-            category=item.get("category", ""),
+            name=item["name"],
+            category=item["category"],
             price=float(item["price"]),
-            cost=float(item.get("cost", 0)),
-            stock=int(item.get("stock", 0)),  # Current stock, not historical
+            cost=float(item["cost"]),
+            stock=int(item["stock"]),
             quantity=int(item["quantity"])
         ))
     
